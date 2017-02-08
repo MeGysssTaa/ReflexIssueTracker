@@ -3,7 +3,6 @@
 Welcome here! This repository is created with two reasons:
 
 1. Developers can easily maintain Reflex related issues
-
 2. People can see Reflex progress and avoid creating repetitive issues all the time
 
 
