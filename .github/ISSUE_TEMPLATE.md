@@ -2,22 +2,10 @@
 **Issue type (console error/false positive/bypass/other):**
 
 
-**Server version:**
+**Do /reflex debug, and paste here the link you've got. Keep empty if on test server:**
 
 
-**ProtocolLib version:**
+**A video proving the bypass/false positive if reporting a bypass/false positive, a link to your server log if reporting a console error, or a link to your Reflex log if reporting a bypass/false positive:**
 
 
-**Reflex version:**
-
-
-**ViaVersion version (if present):**
-
-
-**A video proving the bypass/false positive if reporting a bypass/false positive:**
-
-
-**A link to your server log if reporting a console error, or to Reflex log if reporting a bypass/false positive:**
-
-
-**Additional information (e.g. how to reproduce the issue you are experiencing):**
+**Additional information (i.e. how to reproduce the issue you are experiencing etc.):**
