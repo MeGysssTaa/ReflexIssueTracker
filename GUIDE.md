@@ -45,6 +45,8 @@ In the end, the "Unexpected plugin behavior report" section should looks similar
 
 
 ### Misdetection report
+If your bug is of type **BUG**, erase everything written under "Misdetection report" and write the description of your bug there, desirable with video- or image- evidence, and skip to the "Before submitting" article.
+
 Under "misdetection report" we mean that you want to report a situation where Reflex has made a mistake differentiating a hacker from a legitimate player, and therefore both kicked someone legit (**FALSE POSITIVE**) or ignored someone who was obviously cheating (**BYPASS**).
 
 
@@ -64,13 +66,13 @@ In "DESCRIPTION" fields, please point the way you reproduce the false positive y
 
 Now you should record a video-evidence that demonstrates your issue. This is how you do that:
 
-**（１）**Begin recording.
+**（１）** Begin recording.
 
-**（２）**Demonstrate that you have no bypass permissions (for instance, type "/op", "/deop" or "/reflex bypass `<YOUR USERNAME>` `<CHECK NAME>` false").
+**（２）** Demonstrate that you have no bypass permissions (for instance, type "/op", "/deop" or "/reflex bypass `<YOUR USERNAME>` `<CHECK NAME>` false").
 
-**（３）**Enable in-game verbose by typing **/reflex verbose** (requires **reflex.verbose** and **reflex.command.verbose**).
+**（３）** Enable in-game verbose by typing **/reflex verbose** (requires **reflex.verbose** and **reflex.command.verbose**).
 
-**（４）**Demonstrate the issue itself. If you are reporting a bypass, your video should last for at least one minute and should demonstrate the advantage you get over legitimate players clearly.
+**（４）** Demonstrate the issue itself. If you are reporting a bypass, your video should last for at least one minute and should demonstrate the advantage you get over legitimate players clearly.
 
 
 
@@ -78,3 +80,16 @@ Now you should record a video-evidence that demonstrates your issue. This is how
 As additional info, you can specify other relevant things which you believe can help us dealing with your issue faster. For example, mouse sensetivity, your activity/free hours when you can cooperate with us, etc.
 
 ![sc003](https://pp.userapi.com/c840537/v840537845/299b5/40RJYbp4-PY.jpg)
+
+
+
+
+### Before submitting
+Before clicking "**Submit**", make sure that no one has reported any similar issues or asked any similar questions recently. Duplicate issues are ignored or closed without any response, so searching for anything relevant your topic will save your and our time.
+
+**English** is the only language allowed on this issue tracker. Issues in other languages are closed or ignored. You can get support on other languages in [our Discord](https://discord.gg/SdXY6pG). Please make sure that you have filled everything correctly and accurately, and that your spelling and grammar reach the level where we can understand you. If you don't speak English properly, we can't support you properly either.
+
+
+
+
+If you have any more questions, please contact us and we will gladly help you!
