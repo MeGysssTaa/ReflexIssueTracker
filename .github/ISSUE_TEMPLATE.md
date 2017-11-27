@@ -34,13 +34,13 @@ Dump uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 
 
-Server log uploaded to [p.reflex.rip](https://p.reflex.rip)
+Server log uploaded to [p.reflex.rip](https://p.reflex.rip) (or it's **part with console error** if reporting a console error)
 
 ＞ 
 
 
 
-Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip) (or it's **part with console error** if reporting a console error)
+Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 ＞ 
 
