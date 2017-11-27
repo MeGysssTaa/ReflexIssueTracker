@@ -13,11 +13,11 @@ Bypass／false positive／bug／console error／feature request／question
 
 
 
-If this is a question or a feature request, please erase all the texts below and write your suggestion/question text.
+If this is a question or a feature request, please erase everything written below and write your suggestion/question text.
 
 
 ## Unexpected plugin behavior report
-# (keep empty only if this is a feature request or a question or if the issue is reported from test.reflex.rip)
+#### (keep empty only if this is a feature request or a question or if the issue is reported from test.reflex.rip)
 **REFLEX DEBUG & REFLEX DUMP LINKS**
 
 Debug uploaded to [p.reflex.rip](https://p.reflex.rip)
@@ -45,7 +45,7 @@ Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 
 ## Misdetection report
-# (only fill if you are reporting a bypass or a false positive)
+#### (only fill if you are reporting a bypass or a false positive)
 **DESCRIPTION**
 
 What do you need to do to reproduce the false positive (only for FP report) 
