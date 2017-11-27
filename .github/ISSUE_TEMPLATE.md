@@ -40,7 +40,7 @@ Server log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 
 
-Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
+Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip) (or it's **part with console error** if reporting a console error)
 
 ＞ 
 
@@ -49,7 +49,7 @@ Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 
 ## Misdetection report
-### Only fill if you are reporting a bypass or a false positive
+### Erase everything written below if this is not a bypass or a false positive report
 **DESCRIPTION**
 
 What do you need to do to reproduce the false positive (only for FP report) 
