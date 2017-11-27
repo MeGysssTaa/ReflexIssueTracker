@@ -4,6 +4,8 @@ I know and understand which cheats does Reflex check for, and which it doesn't. 
 
 By erasing this text I understand that this issue will most-likely be deleted or ignored.
 
+
+
 ## General
 **ISSUE TYPE**
 
@@ -44,6 +46,8 @@ Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 
 
+
+
 ## Misdetection report
 ### Only fill if you are reporting a bypass or a false positive
 **DESCRIPTION**
@@ -60,11 +64,15 @@ Which client and which settings do you use to bypass **(NO DOWNLOAD LINKS!)** (o
 
 
 
+
+
 **EVIDENCE**
 
 A video that starts by enabling **/reflex verbose** and demonstrates the existence of the bypass/false positive uploaded to [YouTube](https://youtube.com) 
 
 ＞ 
+
+
 
 
 
