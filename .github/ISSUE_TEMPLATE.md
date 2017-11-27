@@ -1,8 +1,8 @@
-By creating this issue on the Reflex issue tracker, I agree that I have fully and accurately read and understand everything stated in it's [Guide on this page](https://github.com/MeGysssTaa/ReflexIssueTracker/blob/master/GUIDE.md). I understand and agree that this issue can be ignored, closed or labeled "Invalid" without any further comments from Reflex maintainers if this issue doesn't match [the Guide](https://github.com/MeGysssTaa/ReflexIssueTracker/blob/master/GUIDE.md) properly.
+By creating this issue on the Reflex Issue Tracker, I agree that I have fully and accurately read and understood everything stated in it's [Guide on this page](https://github.com/MeGysssTaa/ReflexIssueTracker/blob/master/GUIDE.md). I understand and agree that this issue can be ignored, closed or labeled "Invalid" without any further comments from Reflex maintainers if this issue doesn't match [the Guide](https://github.com/MeGysssTaa/ReflexIssueTracker/blob/master/GUIDE.md) entirely and properly.
 
-I know and understand which hacks does Reflex check for, and which it doesn't. I crealy understand that there are no any movement checks and similar at the moment. I confirm that I am not running any possibly incompatible plugins or mods and my server core is either Spigot or PaperSpigot.
+I know and understand which cheats does Reflex check for, and which it doesn't. I crealy understand that there are no any movement checks and similar at the moment. I confirm that I am not running any possibly incompatible plugins or mods and my server core is either Spigot or PaperSpigot. I confirm that I will actively cooperate with Reflex maintainers in order to solve this issue as soon as possible.
 
-By erasing this text I disagree to everything and I understand that this issue will most-likely be deleted or ignored.
+By erasing this text I understand that this issue will most-likely be deleted or ignored.
 
 ## General
 **ISSUE TYPE**
