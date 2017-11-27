@@ -9,7 +9,7 @@ By erasing this text I disagree to everything and I understand that this issue w
 
 Bypass／false positive／bug／console error／feature request／question
 
-> 
+＞ 
 
 
 
@@ -22,25 +22,25 @@ If this is a question or a feature request, please erase all the texts below and
 
 Debug uploaded to [p.reflex.rip](https://p.reflex.rip)
 
->
+＞
 
 
 
 Dump uploaded to [p.reflex.rip](https://p.reflex.rip)
 
-> 
+＞ 
 
 
 
 Server log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
-> 
+＞ 
 
 
 
 Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
-> 
+＞ 
 
 
 
@@ -50,13 +50,13 @@ Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 What do you need to do to reproduce the false positive (only for FP report) 
 
-> 
+＞ 
 
 
 
 Which client and which settings do you use to bypass **(NO DOWNLOAD LINKS!)** (only for bypass report) 
 
-> 
+＞ 
 
 
 
@@ -64,7 +64,7 @@ Which client and which settings do you use to bypass **(NO DOWNLOAD LINKS!)** (o
 
 A video that starts by enabling **/reflex verbose** and demonstrates the existence of the bypass/false positive uploaded to [YouTube](https://youtube.com) 
 
-> 
+＞ 
 
 
 
@@ -72,4 +72,4 @@ A video that starts by enabling **/reflex verbose** and demonstrates the existen
 
 Additional information which you think might be useful for solving the issue faster
 
-> 
+＞ 
