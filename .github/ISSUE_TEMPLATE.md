@@ -1,8 +1,8 @@
 By creating this issue on the Reflex Issue Tracker, I agree that I have fully and accurately read and understood everything stated in it's [Guide on this page](https://goo.gl/wUwZVk). I understand and agree that this issue can be ignored, closed or labeled "Invalid" without any further comments from Reflex maintainers if this issue doesn't match [the Guide](https://goo.gl/wUwZVk) entirely and properly.
 
-I know and understand which cheats does Reflex check for, and which it doesn't. I crealy understand that there are no any movement checks and similar at the moment. I confirm that I am not running any possibly incompatible plugins or mods and my server core is either Spigot or PaperSpigot. I confirm that I will actively cooperate with Reflex maintainers in order to solve this issue as soon as possible.
+I know and understand which cheats does Reflex check for, and which it doesn't. I clearly understand that there are no any movement checks and similar at the moment. I confirm that I am not running any possibly incompatible plugins or mods and my server core is either Spigot or PaperSpigot. I confirm that I will actively cooperate with Reflex maintainers in order to solve this issue as soon as possible.
 
-By erasing this text I understand that this issue will most-likely be deleted or ignored.
+By erasing this text I understand that this issue will most likely be deleted or ignored.
 
 
 
