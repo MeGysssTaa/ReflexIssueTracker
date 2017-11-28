@@ -91,5 +91,11 @@ Before clicking "**Submit**", make sure that no one has reported any similar iss
 
 
 
+### Useful information
+If your issue has received an "Invalid" label, or if any of Reflex contributors has asked you for additional information, please reply as soon as possible. Issues labeled "Invalid" which haven't been edited or completed by reporter's comment and which exist for over **72 hours** will be closed.
 
-If you have any more questions, please contact us and we will gladly help you!
+Reflex issue tracker is the only place where you should report bugs. In case you will try to report an issue in our Discord or on Spigot, you will be redirected here.
+
+
+
+If you have any more questions, if you believe some useful information might missing in this guide, or if you have found any critical grammar or logic issues, don't hesitate to contact us!
