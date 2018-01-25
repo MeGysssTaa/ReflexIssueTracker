@@ -50,6 +50,9 @@ Reflex log uploaded to [p.reflex.rip](https://p.reflex.rip)
 
 ## Misdetection report
 ### Erase everything written below if this is not a bypass or a false positive report
+
+By reporting a false positive, I confirm that I have entirely read and understood the contents of [the False Positives article](https://goo.gl/R93HQy) on this issue tracker, and that I will follow everything stated there.
+
 **DESCRIPTION**
 
 What do you need to do to reproduce the false positive (only for FP report) 
