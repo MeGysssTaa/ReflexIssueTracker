@@ -56,6 +56,9 @@ Under **false positive** we mean that a player is 100% legit — that is playing
 Under **bypass** we mean that a player is **blatantly** hacking, dominating over others or gaining himself obviously unfair advantage by acting the way legitimate players can't or by automatizing his actions in the way that is significantly different to normal players' actions for a long period of time without getting detected.
 
 
+If reporting a **false positive**, make sure to **[READ THIS ARTICLE](https://goo.gl/R93HQy)**!.
+
+
 If your issue matches these two terms, then let's begin filling the "Misdetection report" template.
 
 
