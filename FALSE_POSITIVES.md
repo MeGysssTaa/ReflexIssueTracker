@@ -1,11 +1,11 @@
 > Make sure to read this article before pushing your issue if you're about to report false positive.
-> This will make your and our life easier, and will speed the fix of the issues you report up.
+> This will make your and our life easier and will speed the fix of the issues you report up.
 
 
 
 ## Introduction
 
-**What are False Positives (FPs)?** A moment when an innocent, 100% legitimate and fair player whose latency and lag status are considered admissible, gets falsely classified by Reflex as a cheater while doing regular, 'daily', actions under regular and stable server performance/TPS, and, henceforth, kicked or banned from the server. Deliberate attempts to provocate Reflex on a 'false positive' by doing abnormal or heavily suspicious actions, playing with irregularly severe lag or attempting to 'look the way a cheater does' is not considered a FP. Reports comprising such behavior are more often closed or ignored without taking care about them.
+**What are False Positives (FPs)?** A moment when an innocent, 100% legitimate and fair player whose latency and lag status are considered admissible, gets falsely classified by Reflex as a cheater while doing regular, 'daily', actions under regular and stable server performance/TPS, and, henceforth, kicked or banned from the server. Deliberate attempts to provocate Reflex on a 'false positive' by doing abnormal or heavily suspicious actions, playing with irregularly severe lag or attempting to 'look the way a cheater does' is not considered a FP. Reports comprising such behavior are more often closed or ignored without taking care of them.
 
 
 **This IS a false positive:** a player with an estimate Lag Points (LP) number of 10-35 and a Lag Status (LS) considered 'OK' is fighting against an **active** player, whose LP and LS are respectively equal to 10-35 and 'OK', normally, doing ordinary, common, 'daily' actions and acting the way most legitimate players do, gets a, say, 'coincidence: #325' flag with violations number of 100 or higher, and, hence, gets kicked from the server falsely.
@@ -21,7 +21,7 @@
 
 ## How to report a false positive
 
-First off, please remember once and forever: a "I have fp please halp!" message will never be considered a **valid bug report**. Neither on the Reflex issue tracker or on the other project' one. Moreover, before repoting a false positive, make sure that it is actually a **false positive**! There are, sadly, cheaters who are mad of the anticheat detecting their clients and, hence, attempting to persuade server owners they are getting false positives. 
+First off, please remember once and forever: an "I have fp please halp!" message will never be considered a **valid bug report**. Neither on the Reflex issue tracker or on the other project' one. Moreover, before reporting a false positive, make sure that it is actually a **false positive**! There are, sadly, cheaters who are mad at the anticheat detecting their clients and, hence, attempting to persuade server owners they are getting false positives. 
 
 
 The false positive report should include, at least, a video-evidence clearly demonstrating not less than the last 5 seconds of the fight before kick, and the relevant Reflex logs, either in a form of in-game verbose which can be easily seen on the video, or, even better, an attached Reflex log (if you want your issue to be easier for us to understand, make sure to only include log entries that contain information relevant to the false positive you are reporting — to the one shown in the video).
@@ -35,18 +35,18 @@ Secondly, the video should be uploaded as a **video** and **__NOT__ as a GIF**, 
 
 ## False positives classification
 
-Reflex has many various checks, and, therefore, some of them need require different approachs.
+Reflex has many various checks, and, therefore, some of them need require different approaches.
 
 Here is a simple map of the most frequently reported false positives to the descriptions of their processes of resolving.
 
 
-**KillAura // 'coincidence: #...'**. This is a **machine learning** detection result. The simplest way to get it fixed is to simply contact us directly. We will then hire you to join the testing server to fix your false positive, if we can't reproduce it ourselves.
+**KillAura // 'coincidence: #...'**. This is a **machine learning** detection result. The simplest way to get it fixed is to simply contact us directly. We will then hire you to join the testing server to fix your false positive if we can't reproduce it ourselves.
 
 
 **KillAura // 'front entity'**. If you have tons of false 'front entity' flags, then something is simply wrong with your server world. You can easily resolve this yourself: just turn the `killaura.realistic_entityids` settings in the configuration **off**.
 
 
-**BlockActions // 'bs: ...'**. It appears that you are building too quickly. If it happens that you are getting many false flags when performing unusual bridging techniques, e.g. 'moonwalk' or 'breezely', simply reduce the `blockactions.min_bridge_delay` number in the config to be a little bit lower than the values you get in verbose. So, say, if you're facing false positives saying 'bs: 272' or 'bs: 260', you should set the `min_bridge_delay` option to `250`.
+**BlockActions // 'bs: ...'**. It appears that you are building too quickly. If it happens that you are getting many false flags when performing unusual bridging techniques, e.g. 'moonwalk' or 'breezily', simply reduce the `blockactions.min_bridge_delay` number in the config to be a little bit lower than the values you get in verbose. So, say, if you're facing false positives saying 'bs: 272' or 'bs: 260', you should set the `min_bridge_delay` option to `250`.
 
 
 
