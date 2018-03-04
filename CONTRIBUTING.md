@@ -5,7 +5,7 @@
 
 
 ## General
-When creating a new issue, a pre-filled text field can be noticed. Please do not erase anything in it unless you are asking a very simply question or suggesting a very simple and small feature.
+When creating a new issue, a pre-filled text field can be noticed. Please do not erase anything in it unless you are asking a very simple question or suggesting a very simple and small feature.
 
 
 ## Filling the template
@@ -38,7 +38,7 @@ If your issue is of type **QUESTION** or **FEATURE REQUEST**, erase the "Unexpec
 **（４）Reflex log.** Go to your Reflex logs folder ("/.../plugins/Reflex/logs" by default) and look for the log with the current date. Open it using any text editor, copy everything and paste on [p.reflex.rip](https://p.reflex.rip). Put the link of your paste in the "Reflex log" field.
 
 
-In the end, the "Unexpected plugin behavior report" section should looks similar to this:
+In the end, the "Unexpected plugin behavior report" section should look similar to this:
 ![sc002](https://pp.userapi.com/c840537/v840537498/29b4e/d5KTTXEEw_U.jpg)
 
 
@@ -64,7 +64,7 @@ If your issue matches these two terms, then let's begin filling the "Misdetectio
 
 
 
-In "DESCRIPTION" fields, please point the way you reproduce the false positive you report (i.e. how fast do you need to click and how do you need to move, in what kind of environment do you need to do that, etc.) if your issue type is **FALSE POSITIVE**, or the name of hacked client you use and it's settings/configuration you use to avoid getting detected by Reflex if your issue type is **BYPASS**. **WARNING:** DO NOT INCLUDE ANY DOWNLOAD/PURCHASE LINKS, ESPECIALLY IF THE SOFTWARE USED IS PAID.
+In "DESCRIPTION" fields, please point the way you reproduce the false positive you report (i.e. how fast do you need to click and how do you need to move, in what kind of environment do you need to do that, etc.) if your issue type is **FALSE POSITIVE** or the name of hacked client you use and it's settings/configuration you use to avoid getting detected by Reflex if your issue type is **BYPASS**. **WARNING:** DO NOT INCLUDE ANY DOWNLOAD/PURCHASE LINKS, ESPECIALLY IF THE SOFTWARE USED IS PAID.
 
 
 Now you should record a video-evidence that demonstrates your issue. This is how you do that:
@@ -80,7 +80,7 @@ Now you should record a video-evidence that demonstrates your issue. This is how
 
 
 
-As additional info, you can specify other relevant things which you believe can help us dealing with your issue faster. For example, mouse sensetivity, your activity/free hours when you can cooperate with us, etc.
+As additional info, you can specify other relevant things which you believe can help us dealing with your issue faster. For example, mouse sensitivity, your activity/free hours when you can cooperate with us, etc.
 
 ![sc003](https://pp.userapi.com/c840537/v840537845/299b5/40RJYbp4-PY.jpg)
 
@@ -95,9 +95,9 @@ Before clicking "**Submit**", make sure that no one has reported any similar iss
 
 
 ### Useful information
-If your issue has received an "Invalid" label, or if any of Reflex contributors has asked you for additional information, please reply as soon as possible. Issues labeled "Invalid" which haven't been edited or completed by reporter's comment and which exist for over **72 hours** will be closed.
+If your issue has received an "Invalid" label, or if one of Reflex contributors has asked you for additional information, please reply as soon as possible. Issues labeled "Invalid" which haven't been edited or completed by reporter's comment and which exist for over **72 hours** will be closed.
 
-Reflex issue tracker is the only place where you should report bugs. In case you will try to report an issue in our Discord or on Spigot, you will be redirected here.
+The Reflex Issue Tracker is the only place where you should report bugs. In case you will try to report an issue in our Discord or on Spigot, you will be redirected here.
 
 
 
