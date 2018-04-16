@@ -88,8 +88,8 @@ general:
   verbose_on_connect: false
 
   # If enabled, Reflex will write verbose messages (the same
-  # as with /reflex verbose) in a special files saved in
-  # {working_directory}/logs and named in format YYYY-MM-DD.log.
+  # as with /reflex verbose) in special files saved in
+  # {working_directory}/logs and named in format DD-MM-YYYY.log.
   # Reflex makes one log per day. This means one log will contain
   # everything happened in a day. 24 hours later, there will be
   # a new file created with a new date containing the events of a new day
@@ -175,6 +175,11 @@ killaura:
 
   # Disable this if you don't want random nametags to be floating around you
   realistic_playerdata: true
+
+  # Should Reflex's NPCs move in server primary thread?
+  # Enabling this may have a slight performance impact.
+  # Disabling may cause random disconnect/crash bugs
+  sync_movement: true
 
   # For how long should the NPC behind the player be visible
   # after attack (millis)? Set to -1 to make it always invisible
@@ -399,7 +404,7 @@ clientcontrol:
 
     # Notification message. %mod% will be replaced with the name of detected client modification.
     # Normal placeholders (which can be used in actions of other checks) are also applicable here
-    message: 'Player &f%player%&d is using &f%mod%'
+    message: '&9%player% &ris using &9%mod%'
 
   # This will disallow joining the server with any client which's
   # brand is not vanilla. Note that this does NOT and can NOT
