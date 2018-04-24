@@ -1,9 +1,5 @@
 Translated by: **Mhy278**
 
-To: **Traditional Chinese (Taiwan)**
-
-
-
 
 # Reflex
 Reflex是針對我的世界伺服器的新一代機器學習反作弊解決方案，擁有最先進、最精確的檢測演算法，即使是最新的作弊也能夠輕鬆識別，從而杜絕所有作弊玩家，保證正常玩家的良好遊戲體驗。
