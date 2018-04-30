@@ -167,7 +167,7 @@ reflex.notify — 查看通过/reflex notify发送的通知。
 ## 安 装
 Reflex 需要以下支持：
 
-- Java 8 或 Java 9，**不支持更早的版本或Java10**！
+- Java 8 / 9 / 10 ，**不支持更早的版本**！
 - 适配你服务器版本的 [ProtocolLib](https://www.spigotmc.org/resources/protocollib.1997/)
 
 对于 PaperSpigot 服务端（或它的分支，如TacoSpigot），Reflex 需要另外安装[谷歌库插件](https://g.reflex.rip/libs)。
