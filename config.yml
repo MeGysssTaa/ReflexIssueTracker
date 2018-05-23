@@ -79,6 +79,16 @@ general:
   # in order to prevent various issues with players joined before startup
   require_startup_done: true
 
+  # Disable this if you don't want Reflex to log any violations
+  # at all, neither in the in-game chat, server logs nor console.
+  # (!) HIGHLY RECOMMENDED: YOU WILL NOT BE SUPPORTED REGARDING
+  #     FALSE POSITIVES OR BYPASSES IF YOU DISABLE THIS OPTION!
+  verbose: true
+
+  # Disable this if you don't want anyone, even with the neccessary
+  # permissions, to be able to see Reflex verbose in the game chat
+  ingame_verbose: true
+
   # Should Reflex send notification messages
   # (the same as with /reflex verbose) in the console?
   console_verbose: false
@@ -105,6 +115,26 @@ general:
   # checks will disable until TPS will normalize.
   # Only effective if "lag_leniency" is set to true
   min_tps: 18.5
+
+  # Reflex caches (temporarily stores in RAM) some stuff in order to optimize some of
+  # its parts or to make it compatible with other plugins. Here you can tweak what
+  # Reflex should cache (true), and what it shouldn't (false)
+  caching:
+
+    # Caching of config values is unlikely to be necessary unless you
+    # have some kind of a custom config reader that overrides Bukkit
+    # config caching. Disabled by default!
+    config: false
+
+    # Reflex caches its permissions ("reflex.*") for players in order
+    # to reduce the number of calls to the permissions system/plugin
+    permissions: true
+
+    # Reflex caches most of packets and their containers players send
+    # for around a minute in order to avoid repetitive reading of same
+    # packets, which can sometimes be very slow. Might take much RAM!
+    # DON'T ENABLE IF YOU HAVE A BIG BUNGEECORD NETWORK WITH MANY SERVERS!
+    packets: false
 
   # /reflex [kick/ban] commands settings
   reflex_kick:
