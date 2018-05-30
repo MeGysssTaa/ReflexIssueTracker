@@ -67,7 +67,7 @@ general:
 
     # The maximal amount of reconnection attempts Reflex should
     # do before giving up (used in case of getting timed out)
-    max_reconnections: 3
+    max_reconnections: 5
 
   # Should Reflex kick all online players away when the
   # server is reloading? Disabling this might cause some
@@ -133,7 +133,7 @@ general:
     # Reflex caches most of packets and their containers players send
     # for around a minute in order to avoid repetitive reading of same
     # packets, which can sometimes be very slow. Might take much RAM!
-    # DON'T ENABLE IF YOU HAVE A BIG BUNGEECORD NETWORK WITH MANY SERVERS!
+    # DON'T ENABLE IF YOU HAVE A BUNGEECORD NETWORK WITH LOTS OF SERVERS!
     packets: false
 
   # /reflex [kick/ban] commands settings
@@ -239,6 +239,10 @@ killaura:
   disabled_checks:
   - "example entry"
 
+  # List of worlds where Reflex will not check anyone for KillAura
+  disabled_worlds:
+  - "lobby"
+
   # Command map
   actions:
     35:
@@ -275,6 +279,10 @@ badpackets:
   disabled_checks:
   - "example entry"
 
+  # List of worlds where Reflex will not check anyone for BadPackets
+  disabled_worlds:
+  - "lobby"
+
   # Command map
   actions:
     5:
@@ -309,6 +317,10 @@ criticals:
   # The names of all the Criticals components can be found on the overview page
   disabled_checks:
   - "example entry"
+
+  # List of worlds where Reflex will not check anyone for Criticals
+  disabled_worlds:
+  - "lobby"
 
   # Command map
   actions:
@@ -345,6 +357,10 @@ blockactions:
   # The names of all the BlockActions components can be found on the overview page
   disabled_checks:
   - "example entry"
+
+  # List of worlds where Reflex will not check anyone for BlockActions
+  disabled_worlds:
+  - "lobby"
 
   # Command map
   actions:
@@ -389,6 +405,10 @@ invactions:
   disabled_checks:
   - "example entry"
 
+  # List of worlds where Reflex will not check anyone for InvActions
+  disabled_worlds:
+  - "lobby"
+
   # Command map
   actions:
     25:
@@ -411,6 +431,10 @@ antiknockback:
   # The names of all the AntiKnockback components can be found on the overview page
   disabled_checks:
   - "example entry"
+
+  # List of worlds where Reflex will not check anyone for AntiKnockback
+  disabled_worlds:
+  - "lobby"
 
   # Command map
   actions:
