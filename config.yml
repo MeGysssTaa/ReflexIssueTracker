@@ -66,8 +66,20 @@ general:
     key: 'AAAAAAAAAA-BBBBBBBBBB-CCCCCCCCCC'
 
     # The maximal amount of reconnection attempts Reflex should
-    # do before giving up (used in case of getting timed out)
+    # do before giving up (used in case of getting timed out).
     max_reconnections: 5
+
+    # When Reflex loses connection to Cloud, and is unable to reconnect after
+    # {max_reconnections} attempts, it gives up reconnecting and loads all the
+    # checks data and switches to normal mode, performing stuff that was previously
+    # done by Cloud on your server, just like if Cloud Computings were disabled.
+    # However, for big servers/networks, it might not be good as then it means that
+    # Reflex might start using much resources on their servers. If you want Reflex to
+    # simply disable the Cloud-supported components in case of Cloud inaccessibility,
+    # set the option below to false. NOTE: THE DISABLED CHECKS WILL NOT WORK UNTIL
+    # SUCCESSFULLY CONNECTED TO CLOUD, WHICH, AFTER GIVE UP, CAN ONLY BE REACHED BY
+    # RESTARTING THE SERVER (OR RECONNECTING USING THE REFLEX API, IF POSSIBLE)
+    auto_switch: true
 
   # Should Reflex kick all online players away when the
   # server is reloading? Disabling this might cause some
@@ -206,10 +218,10 @@ killaura:
   # Disable this if you don't want random nametags to be floating around you
   realistic_playerdata: true
 
-  # Should Reflex's NPCs move in server primary thread?
-  # Enabling this may have a slight performance impact.
-  # Disabling may cause random disconnect/crash bugs
-  sync_movement: true
+  # Should Reflex's NPCs work in server's primary thread?
+  # Enabling this might cause a slight performance impact.
+  # Disabling this might cause random disconnects on some servers
+  sync_npcs: false
 
   # For how long should the NPC behind the player be visible
   # after attack (millis)? Set to -1 to make it always invisible
@@ -221,12 +233,50 @@ killaura:
   # Set this to -1 to always keep the NPCs near players (default)
   npc_max_nocombat: -1
 
-  # If enabled, Reflex will save its heuristics' analysis results
-  # of each player in the '{working_dir}/heur/' folder. This very useful
-  # if you are experiencing Machine Learning ("coincidence: #...") false
-  # positives, or if you have found a Machine Learning bypass.
-  # (!) NOT FOR NORMAL USE! Only enable if you're asked to by the developers
-  debug_heuristics: false
+  # Reflex can take snapshots of players' behaviour that gets
+  # passed to the machine learning check and either save those
+  # to files or send them to other plugins using Reflex API.
+  #
+  # (!) NOT FOR NORMAL USE!
+  #
+  # How should the debug files be created?
+  #
+  #     0 - do not create any, and do not fire any events.
+  #         No heuristics debugging desired (default).
+  #
+  #     1 - do not create any, but fire special events that will allow
+  #         other plugins to handle debug files creation using Reflex API.
+  #
+  #     2 - create debug files all the time, both classified "legit" and "hacks".
+  #         WARNING: might create A LOT of, possibly UNNECESSARY, files!
+  #
+  #     3 - only create debug files for behaviour classified as "legit".
+  #         Useful when reporting bypasses.
+  #
+  #     4 - only create debug files for behaviour classified as "hacks".
+  #         Useful when reporting false positives.
+  # 
+  # (i) NOTE: levels higher than 1 will still fire the API events
+  debug_heuristics: 0
+
+  # How strict should the machine learning check be?
+  #
+  #     0 - detects many "legit-like" Aimbot/AimAssist hacks.
+  #         Extremely unstable, might cause lots of false kicks.
+  #
+  #     1 - [ RECOMMENDED ! ] detects most combat cheats which give
+  #         hacker either slight or significant unfair advantage.
+  #         A few rare false positives may sometimes occur.
+  #
+  #     2 - only detects obvious Killaura and Aimbot hacks,
+  #         though with minimal number of false positives.
+  #
+  # (!) Severity of 1 is pretty stable and is highly recommended.
+  #
+  # If you don't really care about bypasses, and just want
+  # obviously unfair cheats to be detected with as small
+  # number of false positives as possible, use severity of 2
+  heuristics_severity: 1
 
   # Here you can put a list of checks you don't wish to use for some reason.
   #
@@ -249,8 +299,8 @@ killaura:
     - "reflex bypass %player% %check% true"
     - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
 
-# The BadPackets check validates every packet send by player
-# to ensure it's legit and was supposed to be sent
+# The BadPackets check validates all packets sent by players
+# to ensure that they are legit and were supposed to be sent
 badpackets:
 
   # Enable this check?
@@ -480,12 +530,12 @@ clientcontrol:
     # Commands that will be dispatched if any modifications
     # have been detected on a player's client
     actions:
-    - "kick %player% &cAccess denied.%break%%break%&rBlacklisted modifications have been detected.%break%&rNote that FML and LiteLoader are also forbidden.&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+    - "kick %player% &cAccess denied.%break%%break%&rBlacklisted modifications detected.%break%&rNote that FML and LiteLoader are also forbidden.&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
 
   # 5zig is a mod that enhances the client by adding some more additional
   # features to it, such as GUIs, CPS/FPS ingame statistics and more:
   #     http://5zig.net
-  # 5zig allows to disable it's certain features
+  # 5zig allows to disable its certain features
   5zig:
 
     # Should players be allowed to join the server with this mod?
@@ -519,7 +569,7 @@ clientcontrol:
     # If allow_join is set to false, these commands will be
     # dispatched when a player joins with 5zig
     actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications have been detected: &b&l5zig&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&l5zig&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
 
   # BetterSprinting is a mod that enhances sprinting behaviour:
   #     https://minecraft.curseforge.com/projects/better-sprinting
@@ -535,7 +585,7 @@ clientcontrol:
     # If allow_join is set to false, these commands will be
     # dispatched when a player joins with BetterSprinting
     actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications have been detected: &b&lBetterSprinting&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lBetterSprinting&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
 
   # WorldDownloader lets the client download your server map:
   #     http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2520465
@@ -551,7 +601,7 @@ clientcontrol:
     # If allow_join is set to false, these commands will be
     # dispatched when a player joins with WorldDownloader
     actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications have been detected: &b&lWorldDownloader&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lWorldDownloader&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
 
   # The Minecraft mod API and loader most mods are based on:
   #     http://www.minecraftforge.net
@@ -564,7 +614,7 @@ clientcontrol:
     # If allow_join is set to false, these commands will be
     # dispatched when a player joins with Forge
     actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications have been detected: &b&lForge&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lForge&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
 
   # A lightweight Minecraft mod API and loader:
   #     http://www.liteloader.com
@@ -572,12 +622,12 @@ clientcontrol:
   liteloader:
 
     # Should players be allowed to join the server with this mod?
-    allow_join: false
+    allow_join: true
 
     # If allow_join is set to false, these commands will be
     # dispatched when a player joins with LiteLoader
     actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications have been detected: &b&lLiteLoader&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lLiteLoader&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
 
   # Includes several game modifications that may heavily
   # enhance vanilla Minecraft giving user unfair advantages.
@@ -624,11 +674,11 @@ clientcontrol:
     # If allow_join is set to false, these commands will be
     # dispatched when a player joins with BetterPVP
     actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications have been detected: &b&lBetterPVP&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lBetterPVP&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
 
-  # A mod that lets the player to save and load schematics
+  # A mod that lets the player to save and load schematics:
   #     https://minecraft.curseforge.com/projects/schematica
-  # Schematica allows to disable it's certain parts, but can't be detected
+  # Schematica allows to disable its certain parts, but can't be detected
   schematica:
 
     # Which components of Schematica shall Reflex disable?
@@ -643,6 +693,27 @@ clientcontrol:
 
       # Loads one of saved schematics and prepares it for use
       load: true
+
+  # Vape is one of the most popular Minecraft ghost clients which was leaked with a backdoor
+  # allowing the server know about its use. NOTE: this does not detect real (uncracked) Vape!
+  vape:
+
+    # Should players be allowed to join the server with this mod?
+    allow_join: false
+
+    # If allow_join is set to false, these commands will be
+    # dispatched when a player joins with cracked Vape
+    actions:
+    - "reflex ban %player% -1 &cAccess denied.%break%&rBlacklisted modifications detected: &b&lVape&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
+
+  # A Minecraft client with a variety of built-in modifications:
+  #     https://client.badlion.net/
+  # Badlion Client allows to disable its certain parts, but can't be detected.
+  # If you want Reflex to disable certain parts of the Badlion Client for users,
+  # make sure to configure the 'blc_config.json' file which can be found in
+  # Reflex's working directory. If you don't want Reflex to do anything with
+  # users running Badlion Client, simply set this option to false
+  badlion_client_support: true
 
   # Command map (unused)
   actions: {}
