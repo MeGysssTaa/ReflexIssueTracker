@@ -237,7 +237,7 @@ killaura:
   # passed to the machine learning check and either save those
   # to files or send them to other plugins using Reflex API.
   #
-  # (!) NOT FOR NORMAL USE!
+  # (!) NOT FOR NORMAL USE! Only tweak if you were asked to by us.
   #
   # How should the debug files be created?
   #
@@ -256,7 +256,8 @@ killaura:
   #     4 - only create debug files for behaviour classified as "hacks".
   #         Useful when reporting false positives.
   # 
-  # (i) NOTE: levels higher than 1 will still fire the API events
+  # (i) NOTE: levels higher than 1 will still fire the API events.
+  # Please note than enabling this might slow the ML check down significantly
   debug_heuristics: 0
 
   # How strict should the machine learning check be?
@@ -264,14 +265,14 @@ killaura:
   #     0 - detects many "legit-like" Aimbot/AimAssist hacks.
   #         Extremely unstable, might cause lots of false kicks.
   #
-  #     1 - [ RECOMMENDED ! ] detects most combat cheats which give
+  #     1 - < RECOMMENDED ! > detects most combat cheats which give
   #         hacker either slight or significant unfair advantage.
   #         A few rare false positives may sometimes occur.
   #
   #     2 - only detects obvious Killaura and Aimbot hacks,
   #         though with minimal number of false positives.
   #
-  # (!) Severity of 1 is pretty stable and is highly recommended.
+  # (!) Severity of 1 is pretty stable and is HIGHLY recommended.
   #
   # If you don't really care about bypasses, and just want
   # obviously unfair cheats to be detected with as small
