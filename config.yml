@@ -49,6 +49,45 @@ general:
   # of the default theme with the language matching your system locale
   theme: '%default%'
 
+  # Reflex can pickup themes individually for each player according
+  # to their client locale. For example, if a player will join your
+  # server with client language set to Russian, they will see Reflex's
+  # messages as in its Russian theme, even if the `theme` setting above
+  # is set to English. As the number of translations we provide is
+  # comparably low, some locales are "united" - players whose client
+  # language is set to Ukrainian or Belarussian will also see messages
+  # from the Russian locale (since all these languages are similar).
+  # If a player joins the server with client language that has no
+  # similar analogues, Reflex will use the language specified in the
+  # `theme` setting above for them (%default% - server system locale)
+  personalized_themes:
+
+    # Enable personalized themes? This improves user-experience a lot,
+    # especially if you have people all over the world playing together.
+    # If disabled, all players will see Reflex's messages in the language
+    # specified in the `theme` setting above despite their client locale
+    enabled: true
+
+    # Reflex themes names are designed in the following format:
+    #     GROUP_locale[-country],
+    # where "GROUP" is the name of the theme (the set of messages,
+    # styles and colors), "locale" is the language variant of the
+    # theme (for example, Reflex's default, "ModernBlue", theme has
+    # a variety of locales, e.g. "EN", "DE", "IT", etc., which only
+    # differ in the language the messages are written in). If a
+    # language has several significantly different variations,
+    # for example Chinese Traditional and Simplified, "-country"
+    # is added to the name, where "country" is the code of the country
+    # the language variation is mainly used in (example: zh-TW, pt-BR).
+    #
+    # If personalized themes are enabled, Reflex will look for a
+    # theme of the group specified in this setting with language
+    # matching (or being similar to) player's client locale. If
+    # the specified theme group does not contain any appropriate
+    # translations, Reflex will use the theme specified in the
+    # `theme` setting above (%default% - server system locale)
+    theme_group: 'ModernBlue'
+
   # For bigger servers, Reflex provides a cloud computings system.
   # This will make Reflex work this way:
   #     (Your Server) Collect data for player and send it to the Cloud -> (Cloud) Process the data, compute results and send back to your server -> (Your Server) Execute commands, etc.
@@ -204,6 +243,12 @@ killaura:
   # suspicious actions will be suspended. Only effective if
   # the "dynamic_cancel_thresholds" option is set to false
   cancel_threshold: 10
+
+  # When Reflex cancels hits it belives are illegal it also prevents
+  # suspected players from attacking any entities for time specified
+  # in this option (milliseconds, 1 s = 1000 ms). Only effective if the
+  # `silent` option above is set to false. 0 = no attack penalty
+  penalty_time: 1500
 
   # As of 1.9, players can collide with each other. This means that 1.9+
   # players on 1.8 ViaVersion servers (or on 1.9+ servers) might get moved
@@ -398,6 +443,12 @@ blockactions:
   # "dynamic_cancel_thresholds" is set to false
   cancel_threshold: 10
 
+  # When Reflex cancels block placements it belives are illegal it also
+  # prevents suspected players from placing any blocks for time specified
+  # in this option (milliseconds, 1 s = 1000 ms). Only effective if the
+  # `silent` option above is set to false. 0 = no build penalty
+  penalty_time: 3000
+
   # Here you can put a list of checks you don't wish to use for some reason.
   #
   # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
@@ -415,7 +466,7 @@ blockactions:
 
   # Command map
   actions:
-    35:
+    30:
     - "reflex bypass %player% %check% true"
     - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
 
