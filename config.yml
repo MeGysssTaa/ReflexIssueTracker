@@ -449,6 +449,18 @@ blockactions:
   # `silent` option above is set to false. 0 = no build penalty
   penalty_time: 3000
 
+  # Minimal delay between placing blocks when bridging horizontally.
+  # Higher - more strict. Lower - more lenient. 0.0 - disable the check
+  min_hor: 5.0
+
+  # Minimal delay between placing blocks when bridging diagonally.
+  # Higher - more strict. Lower - more lenient. 0.0 - disable the check
+  min_dia: 5.0
+
+  # Minimal delay between placing blocks when towering up.
+  # Higher - more strict. Lower - more lenient. 0.0 - disable the check
+  min_tw: 7.5
+
   # Here you can put a list of checks you don't wish to use for some reason.
   #
   # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
