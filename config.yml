@@ -167,6 +167,12 @@ general:
   # Only effective if "lag_leniency" is set to true
   min_tps: 18.5
 
+  # Reflex automatically disables or tweaks some components according to
+  # the server version (1.8 or 1.9+). If you are using some sort of a plugin
+  # that brings back legacy (1.8) combat mechanics to your 1.9+ server,
+  # it is recommended to set this setting to true to run more efficiently
+  force_legacy_mechanics: false
+
   # Reflex caches (temporarily stores in RAM) some stuff in order to optimize some of
   # its parts or to make it compatible with other plugins. Here you can tweak what
   # Reflex should cache (true), and what it shouldn't (false)
