@@ -1,0 +1,201 @@
+#### Reflex Advanced Configuration #####################################
+#
+#   Welcome here! Looks like you want to change something, am
+# I right? Before doing so, please note one thing: all the
+# settings were tested a lot to work properly. If Reflex breaks
+# after you touched anything, it's YOUR fault.
+#
+#   For any configuration assistance please private message
+# DarksideCode on Spigot, open an issue at go.reflex.rip/bug
+# or write us in Discord: g.reflex.rip/discord
+#
+#   PLEASE REFRAIN FROM TOUCHING ANYTHING WITHOUT SERIOUS REASONS TO!
+#
+#   Also keep in mind that this is ADVANCED configuration.
+# One tweak can break everything. Literally. Even your arm.
+#
+#   Learn more about Reflex AdvCfg:
+#   --> https://g.reflex.rip/advcfg
+#
+#   With love, Reflex team.
+#   © reflex.rip, 2016-2019.
+#
+########################################################################
+
+
+########################################################################
+# BASIC ADVCFG FILE INFORMATION (META) — its name (a very-very brief
+# description), its author (provider) and its version number/string.
+########################################################################
+name: 'Default Configuration'
+provider: 'Reflex Development Team'
+version: '1'
+
+
+########################################################################
+#    THE CONFIGURATION ITSELF
+########################################################################
+
+# Advanced KillAura options
+ka:
+
+  # Advanced options for component ka.cbd
+  cbd:
+
+    # How many violations* does a player need to score within
+    # {period} ticks in order to be flagged? This check is used to detect
+    # blatant cheaters that are suspected very often but not heavily.
+    #
+    # * [Each check gives 'individual' (usually dynamic) number of
+    #    violations, which also often differs from the one shown in
+    #    verbose, because VLs going to ka.cbd and VLs going to player
+    #    are different. The basic rule is same, though: the more the
+    #    check is trusted, the more violation points it gives.]
+    threshold: 35
+
+    # Checking period in ticks*.
+    # (!) NO '/REFLEX RELOAD' SUPPORT: requires full server restart to update!
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    period: 600
+
+  # Advanced options for component ka.clk
+  clk:
+
+    # Maximal allowed number of clicks players are allowed to
+    # do in one second (20 ticks). Legit jitter is usually ≤ 16
+    max_cps: 18
+
+    # Minimal allowed clicking variance. Used to detect constant click rates.
+    # Higher - more strict. Lower - more lenient. 0 - disable the check
+    min_click_variance: 2
+
+  # Advanced options for component ka.fe
+  fe:
+
+    # How many violations will the FrontEntity check add at once?
+    # The check itself is very well-known and has been stable for
+    # years, however, it might produce a few false positives in
+    # rare cases. It is not adviced to set the weight of this check
+    # to anything lower than 4-5 because that will make it barely
+    # effective. Setting this to something very high is also bad
+    weight: 7
+
+  # Advanced options for component ka.heu
+  #
+  # (i) Settings regarding the Heuristics check do not affect the
+  #     core (the NN and datasets) itself, but its "extra" checks
+  #     added in release "10.9". Those parts are combined to compute
+  #     a CP (Cheat Points) number based on neural network output.
+  #     The number of cheat points is always shown in ka.heu verbose
+  #     messages like "cp: N". CP is always a natural number, N∈[0..20].
+  #     The Heuristics check takes its final decision based both on
+  #     NN output and on the number of cheat points, among with some
+  #     other factors like lag status and recent behavior of a player.
+  heu:
+
+    # If CP number of a player is greater than this (and the core decision
+    # is "cheater"), then, no matter the other factors, the player is considered
+    # cheating. This means that that player triggered too many "extra" checks
+    # at a time and, at the same moment, has been classified as a cheater
+    extreme_cp_threshold: 6
+
+    # If the core decision for a player is "cheater", they are not lagging
+    # (have a stable/"good" lag status) and have got a number of CP greater
+    # then this, then the final decision is going to be "cheater".
+    # Does not trigger on players whose lag status is considered "bad"
+    stable_cp_threshold: 3
+
+    # If the core decision for a player is "cheater" and moreover the NN
+    # is very sure about it (extremely high confidence), and the player's
+    # number of CP is greater then then the one set in this option, then
+    # the player is considered cheating. High confidence is pretty difficult
+    # for a legit player to achieve. When the NN is really "certain" the
+    # player is cheating, then most often they really do
+    certain_cp_threshold: 2
+
+  # Advanced options for component ka.hbx
+  #     This check works by finding the best (not mandatory the most recent)
+  #     hitbox of a player's target and then trying to reach it by "moving"
+  #     {precision} blocks forward until the total "movement" distance exceeds
+  #     a preliminarily calculated limit+{leniency}. If no target hitboxes
+  #     (especially no previously mentioned "best" one) were met during
+  #     this check, the player is suspected. If a player gets suspected by
+  #     the Hitbox check more than {threshold} times in {suspicion_lifespan}
+  #     milliseconds, then they are flagged and given KillAura violations
+  hbx:
+
+    # The size of one "hitbox tracer" "step" in blocks.
+    # Higher precision => higher checking accuracy, but more performance impact;
+    # less precision => lower checking accuracy, but less performance impact
+    precision: 0.005
+
+    # The number of additional blocks "hitbox tracer" is allowed to "travel"
+    # after exceeding the preliminarily calculated limit before stopping.
+    # Higher leniency => less effective (way more lenient) check
+    leniency: 0.013
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} seconds before being flagged for cheating
+    threshold: 7
+
+    # After how many milliseconds* will Hitbox's suspicions be forgotten?
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 3000
+
+    # How many violations will the Hitbox check add at once (after
+    # a player will score more than {threshold} suspicions in {...lifespan}
+    # milliseconds)? This check is designed to kick quickly but not instantly
+    weight: 20
+
+  # Advanced options for component ka.yrt
+  yrt:
+
+    # How probable (in percent, %) does a player need to be cheating
+    # according to the ka.yrt check in order to be flagged for KillAura
+    max_probability: 70
+
+# Advanced InvActions options
+invact:
+
+  # Advanced options for component invact.mov
+  mov:
+
+    # For how many milliseconds* are players allowed to move and/or
+    # rotate with open inventory? Reducing this number will speed
+    # detection of InventoryWalk hacks up, but may increase the number
+    # of false positives in various situations.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    open_wait: 500
+
+# Advanced BlockActions options
+#
+# (i) One may want to reduce the values here a little bit in case of many
+#     "ultra-professional" players on the server who are "known" (trusted)
+#     to be able to build very quickly without any mods, autoclickers, etc.
+blckact:
+
+  # Advanced options for component blckact.sfd
+  sfd:
+
+    # Minimal delay between placing blocks when bridging horizontally (in ticks*).
+    # Higher - more strict. Lower - more lenient. 0.0 - disable the check.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_hor: 5.0
+
+    # Minimal delay between placing blocks when bridging diagonally (in ticks*).
+    # Higher - more strict. Lower - more lenient. 0.0 - disable the check.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_dia: 5.0
+    
+  # Advanced options for component blckact.tw
+  tw:
+    
+    # Minimal delay between placing blocks when towering up (in ticks*).
+    # Higher - more strict. Lower - more lenient. 0.0 - disable the check.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_tw: 7.5
