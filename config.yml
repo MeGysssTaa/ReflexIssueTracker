@@ -11,21 +11,31 @@
 #
 #   PLEASE REFRAIN FROM TOUCHING ANYTHING WITHOUT SERIOUS REASONS TO!
 #
+#   Useful links:
+#
+#       1. Report bugs/false positives/bypasses/console errors/other:
+#          --> https://g.reflex.rip/contributing
+#          --> https://g.reflex.rip/bug
+#
+#       2. Reflex Wiki (information about checks, lag accounting, etc):
+#          --> https://g.reflex.rip/wiki
+#
+#       3. Reflex Discord server (quick live support, bug reports, etc):
+#          --> https://g.reflex.rip/discord
+#
+#       4. Reflex on Spigot:
+#          --> https://g.reflex.rip/spigot
+#
 #   With love, Reflex team.
-#   © reflex.rip, 2016-2018.
+#   © reflex.rip, 2016-2019.
 #
 ########################################################################
 
 # General plugin settings
 general:
 
-  # SET THIS TO true IF YOUR SERVER IS IN CHINA OR ANY OTHER ASIAN COUNTRY!
-  # Enabling this makes Reflex to use China DNS for its downloads. This will
-  # decently increase Reflex startup and load speeds for Asian servers!
-  china: false
-
   # Should Reflex use SSL secure connections?
-  # (!) Disable if you're getting "SSLHandshake" errors on startup
+  # (!) Disable if you are getting "SSL Handshake" errors on startup
   use_ssl: true
 
   # Where should the data files be saved? Data files contain info
@@ -35,7 +45,7 @@ general:
   #
   # If you have a BungeeCord network on a single VPS, and don't
   # want to use MySQL, make sure to specify the same working
-  # directory for all the servers!
+  # directory for all your servers!
   working_directory: '%default_data_folder%'
 
   # The selected theme dictates the design, the language and the format of all messages
@@ -101,7 +111,7 @@ general:
     enabled: false
 
     # Key is required to get access to the Cloud Computings feature. To get the key,
-    # contact developers on Spigot by PMing MeGysssTaa. Insert the key you got here
+    # contact developers on Spigot by PMing DarksideCode. Insert the key you got here
     key: 'AAAAAAAAAA-BBBBBBBBBB-CCCCCCCCCC'
 
     # The maximal amount of reconnection attempts Reflex should
@@ -162,16 +172,21 @@ general:
   # and about Reflex Lag Accounting system in general, on the overview page
   lag_leniency: true
 
-  # If server TPS drops down this value, most of the
-  # checks will disable until TPS will normalize.
-  # Only effective if "lag_leniency" is set to true
-  min_tps: 18.5
-
   # Reflex automatically disables or tweaks some components according to
   # the server version (1.8 or 1.9+). If you are using some sort of a plugin
   # that brings back legacy (1.8) combat mechanics to your 1.9+ server,
   # it is recommended to set this setting to true to run more efficiently
   force_legacy_mechanics: false
+
+  # Should Reflex's checks' components acquire their settings
+  # from local Advanced Configuration file (advcfg.yml)?
+  #
+  # FOR MORE INFO SEE:
+  #
+  #     --> https://g.reflex.rip/advcfg
+  #
+  # (!) BY ENABLING THIS SETING YOU AGREE TO THE TERMS LISTED ON THE PAGE ABOVE
+  unlock_advanced_settings: false
 
   # Reflex caches (temporarily stores in RAM) some stuff in order to optimize some of
   # its parts or to make it compatible with other plugins. Here you can tweak what
@@ -216,23 +231,24 @@ general:
     enabled: false
 
     # A class that implements DatabaseClient. Used by
-    # Reflex to connect/disconnect to/from a database
-    client: 'fully.qualified.class.Name'
+    # Reflex to connect/disconnect to/from database
+    client: 'fully.qualified.ClassName'
 
     # A class that implements DataImpl. Used by
-    # Reflex to store and load it's ML data
-    data: 'fully.qualified.class.Name'
+    # Reflex to store and load its ML data
+    data: 'fully.qualified.ClassName'
 
     # A class that implements BanImpl. Used by
-    # Reflex to store and laod it's bans
-    ban: 'fully.qualified.class.Name'
+    # Reflex to store and laod its bans
+    ban: 'fully.qualified.ClassName'
 
-    # A class that implements DailyLogFilePublisher. Used by
-    # Reflex to store it's logs
-    log: 'fully.qualified.class.Name'
+    # A class that implements DailyLogFilePublisher.
+    # Used by Reflex to store its logs
+    log: 'fully.qualified.ClassName'
 
 # The Killaura check covers a wide range of combat hacks and
-# detects most of unfair combat enhancements and more
+# detects most of unfair combat enhancements such as Killaura,
+# Aimbot, some sorts of AimAssist and autoclicker, and more.
 killaura:
 
   # Enable this check?
@@ -245,7 +261,7 @@ killaura:
   # This will result in way more accurate and smart cancel system
   dynamic_cancel_thresholds: true
 
-  # If a player exceeds the number of violations below, his next
+  # If a player exceeds the number of violations below, their next
   # suspicious actions will be suspended. Only effective if
   # the "dynamic_cancel_thresholds" option is set to false
   cancel_threshold: 10
@@ -276,7 +292,7 @@ killaura:
 
   # For how long should the NPC behind the player be visible
   # after attack (millis)? Set to -1 to make it always invisible
-  npc_visilibity_time: 3250
+  npc_visibility_time: 3250
 
   # If a player is not fighting for this number of milliseconds, their
   # NPCs will move far away unless they are back to combat. Useful to
@@ -337,7 +353,7 @@ killaura:
   #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
   #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
   #
-  # The names of all the KillAura components can be found on the overview page
+  # The names of all the KillAura components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
   - "example entry"
 
@@ -349,10 +365,29 @@ killaura:
   actions:
     35:
     - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
+    - "reflex delay 15 reflex kick %player%
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR HACKING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
 
 # The BadPackets check validates all packets sent by players
-# to ensure that they are legit and were supposed to be sent
+# to ensure that they are legit and were supposed to be sent.
+#
+# (!) NOTE #1: this check DOES NOT replace BadPacket checks in other
+#              anticheats, and those do not replace this one. Reflex's
+#              BadPackets is supposed to be used TOGETHER with BadPackets
+#              in some other anticheat(s).
+#
+# (i) NOTE #2: this check covers many possible/potential/existing bypasses
+#              of other checks, thus patching many types of cheats, including
+#              Killaura, Scaffold, PingSpoof, etc. If you are wondering do
+#              you need Reflex's BadPackets or not, the answer is definite:
+#              YES, no matter what other anticheat(s) you are using.
 badpackets:
 
   # Enable this check?
@@ -365,7 +400,7 @@ badpackets:
   # This will result in way more accurate and smart cancel system
   dynamic_cancel_thresholds: true
 
-  # If a player exceeds the number of violations below, his next
+  # If a player exceeds the number of violations below, their next
   # suspicious actions will be suspended. Only effective if
   # "dynamic_cancel_thresholds" is set to false
   cancel_threshold: 1
@@ -377,7 +412,7 @@ badpackets:
   #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
   #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
   #
-  # The names of all the BadPackets components can be found on the overview page
+  # The names of all the BadPackets components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
   - "example entry"
 
@@ -389,9 +424,23 @@ badpackets:
   actions:
     5:
     - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
+    - "reflex delay 15 reflex kick %player%
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR HACKING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
 
-# The Criticals check prevents players from doing critical hits when it isn't technically possible
+# The Criticals check prevents players from doing critical hits when it isn't technically possible.
+# Most Critical hacks are already patched by Reflex's KillAura check. This check aims to detect some
+# potential "packet-criticals" bypasses.
+#
+# (i) NOTE: Reflex MAY NOT detect "mini-jump" Criticals. Those are something that should be patched
+#           by a movement anticheat, so if you are using one, trust this type of hack to it. We still
+#           recommend you to keep this check enabled, though.
 criticals:
 
   # Enable this check?
@@ -404,7 +453,7 @@ criticals:
   # This will result in way more accurate and smart cancel system
   dynamic_cancel_thresholds: true
 
-  # If a player exceeds the number of violations below, his next
+  # If a player exceeds the number of violations below, their next
   # suspicious actions will be suspended. Only effective if
   # "dynamic_cancel_thresholds" is set to false
   cancel_threshold: 1
@@ -416,7 +465,7 @@ criticals:
   #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
   #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
   #
-  # The names of all the Criticals components can be found on the overview page
+  # The names of all the Criticals components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
   - "example entry"
 
@@ -428,10 +477,18 @@ criticals:
   actions:
     18:
     - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
+    - "reflex delay 15 reflex kick %player%
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR HACKING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
 
 # The BlockActions check handles basically everything related to block
-# breaking/placement and prevents hackers from using Scaffold and Tower hacks
+# breaking/placement and prevents hackers from using Scaffold and Tower hacks.
 blockactions:
 
   # Enable this check?
@@ -444,7 +501,7 @@ blockactions:
   # This will result in way more accurate and smart cancel system
   dynamic_cancel_thresholds: true
 
-  # If a player exceeds the number of violations below, his next
+  # If a player exceeds the number of violations below, their next
   # suspicious actions will be suspended. Only effective if
   # "dynamic_cancel_thresholds" is set to false
   cancel_threshold: 10
@@ -455,18 +512,6 @@ blockactions:
   # `silent` option above is set to false. 0 = no build penalty
   penalty_time: 3000
 
-  # Minimal delay between placing blocks when bridging horizontally.
-  # Higher - more strict. Lower - more lenient. 0.0 - disable the check
-  min_hor: 5.0
-
-  # Minimal delay between placing blocks when bridging diagonally.
-  # Higher - more strict. Lower - more lenient. 0.0 - disable the check
-  min_dia: 5.0
-
-  # Minimal delay between placing blocks when towering up.
-  # Higher - more strict. Lower - more lenient. 0.0 - disable the check
-  min_tw: 7.5
-
   # Here you can put a list of checks you don't wish to use for some reason.
   #
   # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
@@ -474,7 +519,7 @@ blockactions:
   #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
   #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
   #
-  # The names of all the BlockActions components can be found on the overview page
+  # The names of all the BlockActions components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
   - "example entry"
 
@@ -486,10 +531,18 @@ blockactions:
   actions:
     30:
     - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
+    - "reflex delay 15 reflex kick %player%
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR HACKING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
 
 # The InvActions check prevents players from doing technically impossible
-# inventory actions such as moving with opened inventory and more
+# inventory actions such as moving with opened inventory and more.
 invactions:
 
   # Enable this check?
@@ -502,7 +555,7 @@ invactions:
   # This will result in way more accurate and smart cancel system
   dynamic_cancel_thresholds: true
 
-  # If a player exceeds the number of violations below, his next
+  # If a player exceeds the number of violations below, their next
   # suspicious actions will be suspended. Only effective if
   # "dynamic_cancel_thresholds" is set to false
   cancel_threshold: 5
@@ -511,9 +564,6 @@ invactions:
   # Detects InvWalk and some AutoArmor/Killaura hacks
   block_movement: true
 
-  # What delay should Reflex enforce between inventory clicks (millis)?
-  min_click_delay: 50
-
   # Here you can put a list of checks you don't wish to use for some reason.
   #
   # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
@@ -521,7 +571,7 @@ invactions:
   #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
   #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
   #
-  # The names of all the InvActions components can be found on the overview page
+  # The names of all the InvActions components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
   - "example entry"
 
@@ -533,9 +583,20 @@ invactions:
   actions:
     25:
     - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
+    - "reflex delay 15 reflex kick %player%
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR HACKING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
 
 # The AntiKnockback check forces players to move away when they are getting attacked
+# properly. Detects "full" knockback ignorance, "Small Knockback" and "Reverse Knockback".
+# This check also forbids players to change their movement direction in midair, which also
+# detects many Bhop/Strafe cheats, among with a few other movement ones.
 antiknockback:
 
   # Enable this check?
@@ -548,7 +609,7 @@ antiknockback:
   #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
   #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
   #
-  # The names of all the AntiKnockback components can be found on the overview page
+  # The names of all the AntiKnockback components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
   - "example entry"
 
@@ -560,14 +621,71 @@ antiknockback:
   actions:
     7:
     - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player% &fYou have been kicked.%break%&fReason: &b&lDETECTED FOR HACKING&r%break%%break%&r&cIf you believe that this is a false positive,%break%&cplease open a report at &fgo.reflex.rip/bug&r%break%%break%&7Kick ID: &f%id%%break%&7%date%"
+    - "reflex delay 15 reflex kick %player%
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR HACKING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
 
-# The ClientControl check allows you to disable certain feature
-# of certain mods, or disallow joining with them at all
-clientcontrol:
+# The VehicleMove check prevents players from moving impossibly on
+# vehicles, which detects a variety of cheats, including BoatFly and
+# BoatSpeed. NOTE: all vehicle cheats, and hence the check, only work
+# on Minecraft 1.9 or newer. No BoatFly threats on 1.8.
+vehiclemove:
 
   # Enable this check?
   enabled: true
+
+  # Turn this on if you don't want this check to cancel any illegal actions
+  silent: false
+
+  # If a player exceeds the number of violations below,
+  # all their next suspicious actions will be suspended
+  cancel_threshold: 4
+
+  # Here you can put a list of checks you don't wish to use for some reason.
+  #
+  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
+  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
+  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
+  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
+  #
+  # The names of all the VehicleMove components can be found on our wiki: https://g.reflex.rip/wiki
+  disabled_checks:
+  - "example entry"
+
+  # List of worlds where Reflex will not check anyone for AntiKnockback
+  disabled_worlds:
+  - "lobby"
+
+  # Command map
+  actions:
+    10:
+    - "reflex bypass %player% %check% true"
+    - "reflex delay 15 reflex kick %player%
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR HACKING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
+
+# The ClientControl check allows you to disable certain feature
+# of certain mods, or disallow joining with them at all.
+#
+# NOTE: disabled by default because servers usually do not
+#       want to have this sort of check. It is still stable
+#       and it is safe to use it if you need or want to.
+clientcontrol:
+
+  # Enable this check?
+  enabled: false
 
   # Your staff members (players with the reflex.notify permission) will
   # receive notifications when a player joins with a modded client
