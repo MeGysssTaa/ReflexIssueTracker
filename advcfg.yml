@@ -417,3 +417,5 @@ vehmv:
     # a player is allowed to reach on boat? NOTE: acceleration is basically same in
     # any conditions - on (flowing) water, ice, ground and even in midair (partially).
     max_acceleration: 0.06
+
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
