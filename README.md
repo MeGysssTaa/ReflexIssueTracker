@@ -1,9 +1,11 @@
 # Reflex Issue Tracker
 
-Welcome here! This repository is created with two reasons:
+Welcome here! This repository is created for many reasons, including these:
 
 1. Developers can easily maintain Reflex related issues.
 2. People can see Reflex progress and avoid creating repetitive issues all the time.
+3. Maintain a convenient [Reflex Wiki containing everything one may ever want to know about this project.](https://g.reflex.rip/wiki)
+4. Store Reflex-related files such as config, terms of use and overview translations.
 
 
 Before getting started, please [read this article](https://goo.gl/Sjdqvb)!
