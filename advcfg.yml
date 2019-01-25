@@ -17,10 +17,26 @@
 #   Learn more about Reflex AdvCfg:
 #   --> https://g.reflex.rip/advcfg
 #
+#   Useful links:
+#
+#       1. Report bugs/false positives/bypasses/console errors/other:
+#          --> https://g.reflex.rip/contributing
+#          --> https://g.reflex.rip/bug
+#
+#       2. Reflex Wiki (information about checks, lag accounting, etc):
+#          --> https://g.reflex.rip/wiki
+#
+#       3. Reflex Discord server (quick live support, bug reports, etc):
+#          --> https://g.reflex.rip/discord
+#
+#       4. Reflex on Spigot:
+#          --> https://g.reflex.rip/spigot
+#
 #   With love, Reflex team.
 #   © reflex.rip, 2016-2019.
 #
 ########################################################################
+
 
 
 ########################################################################
@@ -32,6 +48,7 @@ provider: 'Reflex Development Team'
 version: '1'
 
 
+
 ########################################################################
 #    THE CONFIGURATION ITSELF
 ########################################################################
@@ -40,6 +57,9 @@ version: '1'
 ka:
 
   # Advanced options for component ka.cbd
+  #
+  #     Combines all other Killaura components and looks at general
+  #     violation density. Used to detect "half-legit-half-blatant" hacks.
   cbd:
 
     # How many violations* does a player need to score within
@@ -60,17 +80,38 @@ ka:
     period: 600
 
   # Advanced options for component ka.clk
+  #
+  #     Monitors players' clicking rates and detects various non-vanilla
+  #     behavior, including fast / double-(multiple-) / consistent clicking.
   clk:
 
     # Maximal allowed number of clicks players are allowed to
     # do in one second (20 ticks). Legit jitter is usually ≤ 16
+    # (keep in mind that Reflex's CPS calculation is kind of "unusual" and
+    # therefore the CPS it shows will be different to CPS shown by CPS meter
+    # software/mods; 18+ CPS should be impossible for a legitimate player to
+    # get on **Reflex's** click rate meter)
     max_cps: 18
 
-    # Minimal allowed clicking variance. Used to detect constant click rates.
-    # Higher - more strict. Lower - more lenient. 0 - disable the check
+    # Minimal allowed clicking variance. Used to detect consistent click rates.
+    # Higher - more strict. Lower - more lenient. 0 - disable the check.
+    # NOTE: this check is very stable and is not known to have any false positives.
     min_click_variance: 2
 
+    # Minimal delay that Reflex will enforce between clicks, in milliseconds*.
+    # If a player constantly clicks at delays lower than this, then they are
+    # very likely to be using double-/triple-/N-click cheats or AutoClicker.
+    # For example, clicking with delay of 20 ms is approximately equal to
+    # 1000/20 = 50 clicks per second, which is absolutely not legitimate.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    min_click_delay: 25
+
   # Advanced options for component ka.fe
+  #
+  #     Spawns many invisible entities in front of player's cursor when they are
+  #     in combat. A legitimate player will always hit them, but many Killauras
+  #     (especially Vanilla/NCP ones) may hit through and get caught by this check
   fe:
 
     # How many violations will the FrontEntity check add at once?
@@ -82,6 +123,10 @@ ka:
     weight: 7
 
   # Advanced options for component ka.heu
+  #
+  # Uses a neural network with pre-trained (by us, the developers, with
+  # help of you, the community) datasets ("samples") to detect a wide
+  # range of combat cheats like Aimbot and Killaura/"LegitAura".
   #
   # (i) Settings regarding the Heuristics check do not affect the
   #     core (the NN and datasets) itself, but its "extra" checks
@@ -115,6 +160,7 @@ ka:
     certain_cp_threshold: 2
 
   # Advanced options for component ka.hbx
+  #
   #     This check works by finding the best (not mandatory the most recent)
   #     hitbox of a player's target and then trying to reach it by "moving"
   #     {precision} blocks forward until the total "movement" distance exceeds
@@ -136,7 +182,7 @@ ka:
     leniency: 0.013
 
     # The maximal number of suspicions a player is allowed to obtain in
-    # {suspicion_lifespan} seconds before being flagged for cheating
+    # {suspicion_lifespan} milliseconds before being flagged for cheating
     threshold: 7
 
     # After how many milliseconds* will Hitbox's suspicions be forgotten?
@@ -149,25 +195,18 @@ ka:
     weight: 20
 
   # Advanced options for component ka.yrt
+  #
+  #     Looks at players' aiming/rotation style during combat and finds
+  #     any suspicious patterns in it, and then computes a "probability of
+  #     hacking" using the `{suspicious_rotations} / {total_rotations} * 100
+  #     formula. Detects some Aimbots and Killauras very quickly.
   yrt:
 
     # How probable (in percent, %) does a player need to be cheating
     # according to the ka.yrt check in order to be flagged for KillAura
     max_probability: 70
 
-# Advanced InvActions options
-invact:
 
-  # Advanced options for component invact.mov
-  mov:
-
-    # For how many milliseconds* are players allowed to move and/or
-    # rotate with open inventory? Reducing this number will speed
-    # detection of InventoryWalk hacks up, but may increase the number
-    # of false positives in various situations.
-    #
-    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
-    open_wait: 500
 
 # Advanced BlockActions options
 #
@@ -177,6 +216,8 @@ invact:
 blckact:
 
   # Advanced options for component blckact.sfd
+  #
+  #     Checks for ScaffoldWalk hacks and enforces a bridging speed limit.
   sfd:
 
     # Minimal delay between placing blocks when bridging horizontally (in ticks*).
@@ -190,12 +231,189 @@ blckact:
     #
     # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
     min_dia: 5.0
-    
+
   # Advanced options for component blckact.tw
+  #
+  #     Checks for Tower hacks and enforces a towering speed limit.
   tw:
-    
+
     # Minimal delay between placing blocks when towering up (in ticks*).
     # Higher - more strict. Lower - more lenient. 0.0 - disable the check.
     #
     # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
     min_tw: 7.5
+
+
+
+# Advanced InvActions options
+invact:
+
+  # Advanced options for component invact.mov
+  #
+  #     Prevents cheaters from walking/rotating with open inventory.
+  mov:
+
+    # For how many milliseconds* are players allowed to move and/or
+    # rotate with open inventory? Reducing this number will speed
+    # detection of InventoryWalk hacks up, but may increase the number
+    # of false positives in various situations.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    open_wait: 500
+
+
+
+# Advanced AntiKnockback options
+vel:
+
+  # Advanced options for component vel.act
+  #
+  #     This check gives players small random velocities when they open
+  #     any inventories (including chests, crafting tables, etc.) and makes
+  #     sure they respond with a proper move. If a player did not move
+  #     as expected, they are given a suspicion. Receiving more than {threshold}
+  #     suspicions within {suspicion_lifespan} ms means that the player is very
+  #     likely to be cheating, and therefore they are given a lot of violations
+  #     at a time (a number that is enough for instant kick).
+  act:
+
+    # Maximal allowed X/Z  distance (in blocks) between knockback locations
+    # that Reflex predicts and players' actual knocknack locations
+    max_offset: 0.024
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating
+    threshold: 4
+
+    # After how many milliseconds* will vel.act's suspicions be forgotten?
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 30000
+
+    # How many ticks* should Reflex wait after "fatal" flags before dealing
+    # violations and showing the necessary verbose message(s)? For example,
+    # if this is set to 100, and a player scores over {threshold} suspicions
+    # in last {suspicion_lifespan} ms, then Reflex will wait 5 seconds before
+    # actually notifying about this in verbose and giving that player many
+    # violations (kicking them). This option is very recommended to be something
+    # high (100 is high enough, though it could even be higher if you wish) as
+    # it confuses cheaters and hardens their understanding of kick/ban reasons
+    # (because cheaters will be kicked "randomly", not right on their violations).
+    #
+    # (i) This does not affect "low" ("non-fatal") violations which only
+    #     add 1 violation and exist simply to show verbose messages - these
+    #     will always go without any delays.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    flag_delay: 100
+
+  # Advanced options for component vel.adr
+  #
+  #     Checks for illegal movement direction changes in midair.
+  #     This is normally impossible for legit players but often
+  #     happens if a player is using knockback or other movement
+  #     cheats, including BHop/Strafe.
+  adr:
+
+    # Maximal allowed angle (in degrees) between player's current and
+    # their last movement direction vectors (180 degrees = full reverse;
+    # also, 180 degrees is the maximal possible angle (1 side: 360/2=180, just maths))
+    max_angle: 35.0
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating
+    threshold: 3
+
+    # After how many milliseconds* will vel.adr's suspicions be forgotten?
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 7500
+
+  # Advanced options for component vel.hrz
+  #
+  #     Checks whether players are being knocked back properly after being hit
+  #     (horizontally — there is a separate, vel.vtl, component for vertical velocity
+  #     monitoring), and if not, teleports them where they should normally be knocked
+  #     back. Being teleported forcefully too often indicates that a player is most
+  #     probably cheating, so when that happens, Reflex adds them a significant number
+  #     of violations so that they are kicked for AntiKnockback soon enough.
+  #
+  #     Before deciding whether to teleport a player or not, Reflex performs several
+  #     checks, which all add different number of "pre-vl", and then looks how many
+  #     "pre-vls" did a player get during checking. If that number is greater than
+  #     {prevl_threshold}, the player is considered cheating (using Velocity hacks).
+  #     When a player is considered cheating, they are added one suspicion. If that
+  #     player gets more than {threshold} suspicions within {suspicion_lifespan} ms,
+  #     they will be added real AntiKnockback violations, which will later lead to
+  #     them being teleported (forced knockback) or removed from the server.
+  hrz:
+
+    # Maximal allowed number of "pre-vls" a player is allowed to
+    # score during check before being flagged/teleported/kicked.
+    prevl_threshold: 3
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating
+    threshold: 1
+
+    # After how many milliseconds* will vel.hrz's suspicions be forgotten?
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 5000
+
+    # Reflex attempts to predict where players should land after being hit,
+    # and teleports them there in case they seem to be ignoring server velocity.
+    # If you want Reflex to simply monitor and kick, without forcing anyone to
+    # knock back properly, then just enable the "silent" option in config.yml.
+    forced_knockback:
+
+      # How strongly should Reflex teleport players horizontally?
+      # 0.0 - teleport to location on hit (no forced knockback).
+      # Higher values - higher teleport distance.
+      hor_multiplier: 4.0
+
+      # How strongly should Reflex teleport players vertically?
+      # 0.0 - teleport to location on hit (no forced knockback).
+      # Higher values - higher teleport distance. The overall Y
+      # teleport distance is limited, see {max_ver_dist} below.
+      ver_multiplier: 2.0
+
+      # What's the maximum distance (in blocks) Reflex can teleport players
+      # vertically? Teleportation is made relatively to player's position ON HIT
+      # (at the moment when the check started). If the Y distance between that
+      # location and predicted location (plus {ver_multiplier}) is greater than
+      # {max_ver_dist} blocks, then the player is only teleported {max_ver_dist}
+      # blocks vertically. This does not affect horizontal teleportation.
+      max_ver_dist: 1.7
+
+
+
+# Advanced VehicleMove options
+vehmv:
+
+  # Advanced options for component vehmv.boat
+  #
+  #     Enfores vanilla boat movement mechanics. Checks fall
+  #     gravity and movement speed and acceleration in order to
+  #     detect BoatFly/BoatSpeed cheats.
+  boat:
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* in normal conditions (still surface or in midair)?
+    max_normal_speed: 0.52
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* on flowing water (waterfalls, flowing streams)?
+    max_flowing_speed: 0.58
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* on ground (yes, it is possible to drive boat like a car
+    # on ground in Minecraft)? This does cover ice blocks - see options below.
+    max_ground_speed: 0.26
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* on frozen surfaces (ice, packed ice)? NOTE: it is possible
+    # to use boat like a sportcar on ice in Minecraft - love its physics.
+    max_ice_speed: 2.08
+
+    # What's the maximal allowed acceleration (in m/s^2, metres per second square)
+    # a player is allowed to reach on boat? NOTE: acceleration is basically same in
+    # any conditions - on (flowing) water, ice, ground and even in midair (partially).
+    max_acceleration: 0.06
