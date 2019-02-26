@@ -32,20 +32,24 @@
 #       4. Reflex on Spigot:
 #          --> https://g.reflex.rip/spigot
 #
-#   With love, Reflex team.
+#   With love, Reflex Development Team.
 #   © reflex.rip, 2016-2019.
 #
 ########################################################################
 
 
 
+
 ########################################################################
 # BASIC ADVCFG FILE INFORMATION (META) — its name (a very-very brief
 # description), its author (provider) and its version number/string.
+#
+# MUST BE CHANGED BEFORE THIS ADVCFG GETS USED!
 ########################################################################
 name: 'Default Configuration'
 provider: 'Reflex Development Team'
-version: '1'
+version: '2'
+
 
 
 
@@ -60,6 +64,9 @@ ka:
   #
   #     Combines all other Killaura components and looks at general
   #     violation density. Used to detect "half-legit-half-blatant" hacks.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★☆☆☆  (2/5 - useful in some cases or for some certain types of cheats)
   cbd:
 
     # How many violations* does a player need to score within
@@ -83,6 +90,9 @@ ka:
   #
   #     Monitors players' clicking rates and detects various non-vanilla
   #     behavior, including fast / double-(multiple-) / consistent clicking.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★☆☆  (3/5 - efficient for certain types of cheats)
   clk:
 
     # Maximal allowed number of clicks players are allowed to
@@ -111,7 +121,10 @@ ka:
   #
   #     Spawns many invisible entities in front of player's cursor when they are
   #     in combat. A legitimate player will always hit them, but many Killauras
-  #     (especially Vanilla/NCP ones) may hit through and get caught by this check
+  #     (especially Vanilla/NCP ones) may hit through and get caught by this check.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
   fe:
 
     # How many violations will the FrontEntity check add at once?
@@ -137,6 +150,9 @@ ka:
   #     The Heuristics check takes its final decision based both on
   #     NN output and on the number of cheat points, among with some
   #     other factors like lag status and recent behavior of a player.
+  #
+  # Accuracy:   ★★★☆☆  (3/5 - known to have some false positives in some cases)
+  # Efficiency: ★★★★★  (5/5 - awesome)
   heu:
 
     # If CP number of a player is greater than this (and the core decision
@@ -168,7 +184,10 @@ ka:
   #     (especially no previously mentioned "best" one) were met during
   #     this check, the player is suspected. If a player gets suspected by
   #     the Hitbox check more than {threshold} times in {suspicion_lifespan}
-  #     milliseconds, then they are flagged and given KillAura violations
+  #     milliseconds, then they are flagged and given KillAura violations.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
   hbx:
 
     # The size of one "hitbox tracer" "step" in blocks.
@@ -189,10 +208,32 @@ ka:
     # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
     suspicion_lifespan: 3000
 
-    # How many violations will the Hitbox check add at once (after
+    # How many violations will the Hitbox period check add at once (after
     # a player will score more than {threshold} suspicions in {...lifespan}
     # milliseconds)? This check is designed to kick quickly but not instantly
-    weight: 20
+    period_weight: 20
+
+    # There is also another, instant check in this component, which flags
+    # with first violation. It is used to a) detect very blatant Reach/Hitbox
+    # cheats faster; b) help Reflex detecting less blatant/"somewhat bypassing"
+    # Killauras. A player is flagged if the lowest distance computed by Reflex*
+    # is greater than {max_lowest}.
+    #
+    # Getting many "hitbox (instant)" flags usually indicates that a player
+    # is very likely to be using Reach/Hitbox/Killaura cheats or similar.
+    #
+    # * [Reflex stores several hitboxes of a player's target in memory, and for
+    #    distance calculation it uses the one that it thinks fits "best" in current
+    #    situation. There are also several nuances in distance calculation, so it is
+    #    important that you DO NOT link Reflex's "lowest hitbox distance" with
+    #    ordinary Minecraft distances like "number of blocks from eye to eye".
+    #    This value is rather based on magic, so please refrain from touching it
+    #    unless you really know what you do.]
+    max_lowest: 1.679
+
+    # How many violations will the Hitbox instant check add at once?
+    # See the {max_lowest} option above for more information about Hitbox Instant.
+    instant_weight: 15
 
   # Advanced options for component ka.yrt
   #
@@ -200,11 +241,15 @@ ka:
   #     any suspicious patterns in it, and then computes a "probability of
   #     hacking" using the `{suspicious_rotations} / {total_rotations} * 100
   #     formula. Detects some Aimbots and Killauras very quickly.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★☆☆  (3/5 - efficient for certain types of cheats)
   yrt:
 
     # How probable (in percent, %) does a player need to be cheating
     # according to the ka.yrt check in order to be flagged for KillAura
     max_probability: 70
+
 
 
 
@@ -218,6 +263,9 @@ blckact:
   # Advanced options for component blckact.sfd
   #
   #     Checks for ScaffoldWalk hacks and enforces a bridging speed limit.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★★  (5/5 - awesome)
   sfd:
 
     # Minimal delay between placing blocks when bridging horizontally (in ticks*).
@@ -235,6 +283,9 @@ blckact:
   # Advanced options for component blckact.tw
   #
   #     Checks for Tower hacks and enforces a towering speed limit.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★★  (5/5 - awesome)
   tw:
 
     # Minimal delay between placing blocks when towering up (in ticks*).
@@ -245,12 +296,16 @@ blckact:
 
 
 
+
 # Advanced InvActions options
 invact:
 
   # Advanced options for component invact.mov
   #
   #     Prevents cheaters from walking/rotating with open inventory.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
   mov:
 
     # For how many milliseconds* are players allowed to move and/or
@@ -260,6 +315,7 @@ invact:
     #
     # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
     open_wait: 500
+
 
 
 
@@ -275,6 +331,9 @@ vel:
   #     suspicions within {suspicion_lifespan} ms means that the player is very
   #     likely to be cheating, and therefore they are given a lot of violations
   #     at a time (a number that is enough for instant kick).
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★☆☆  (3/5 - efficient for certain types of cheats)
   act:
 
     # Maximal allowed X/Z  distance (in blocks) between knockback locations
@@ -283,7 +342,7 @@ vel:
 
     # The maximal number of suspicions a player is allowed to obtain in
     # {suspicion_lifespan} milliseconds before being flagged for cheating
-    threshold: 4
+    threshold: 2
 
     # After how many milliseconds* will vel.act's suspicions be forgotten?
     # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
@@ -312,6 +371,9 @@ vel:
   #     This is normally impossible for legit players but often
   #     happens if a player is using knockback or other movement
   #     cheats, including BHop/Strafe.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
   adr:
 
     # Maximal allowed angle (in degrees) between player's current and
@@ -344,6 +406,9 @@ vel:
   #     player gets more than {threshold} suspicions within {suspicion_lifespan} ms,
   #     they will be added real AntiKnockback violations, which will later lead to
   #     them being teleported (forced knockback) or removed from the server.
+  #
+  # Accuracy:   ★★★☆☆  (3/5 - known to have some false positives in some cases)
+  # Efficiency: ★★★★★  (5/5 - awesome)
   hrz:
 
     # Maximal allowed number of "pre-vls" a player is allowed to
@@ -352,7 +417,7 @@ vel:
 
     # The maximal number of suspicions a player is allowed to obtain in
     # {suspicion_lifespan} milliseconds before being flagged for cheating
-    threshold: 1
+    threshold: 2
 
     # After how many milliseconds* will vel.hrz's suspicions be forgotten?
     # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
@@ -385,6 +450,7 @@ vel:
 
 
 
+
 # Advanced VehicleMove options
 vehmv:
 
@@ -393,6 +459,9 @@ vehmv:
   #     Enfores vanilla boat movement mechanics. Checks fall
   #     gravity and movement speed and acceleration in order to
   #     detect BoatFly/BoatSpeed cheats.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★★  (5/5 - awesome)
   boat:
 
     # What's the maximal allowed number of blocks a player is allowed to move
@@ -419,3 +488,35 @@ vehmv:
     max_acceleration: 0.06
 
     # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+
+
+
+
+# Advanced ElytraMove options
+eltr:
+
+  # Advanced options for component eltr.mv
+  #
+  #     Enfores vanilla Elytra movement mechanics. Strictly
+  #     limits the direction and speed in which players are
+  #     allowed to move in different situations with Elytra.
+  #     Detects Elytra+/ElytraFly/ElytraSpeed and similar.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  mv:
+
+    # If a player gets teleported back for violating ElytraMove more than
+    # {setbacks_to_unequip} times within {setback_lifespan} milliseconds*,
+    # Reflex will forcefully take off their Elytra. See regular config.yml
+    # for details on "take off".
+    #
+    # NOTE: only takes effect if all of the following is true:
+    #     (1) "elytramove.silent" in config.yml is disabled;
+    #     (2) "elytramove.unequip_elytra" in config.yml is enabled (which itself also requires (1) to be true).
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    setbacks_to_unequip: 12
+
+    # See comment to the above option (`setbacks_to_unequip`).
+    setback_lifespan: 3000
