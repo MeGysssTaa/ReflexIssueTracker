@@ -133,6 +133,38 @@ general:
     # RESTARTING THE SERVER (OR RECONNECTING USING THE REFLEX API, IF POSSIBLE)
     auto_switch: true
 
+  # There may be a variety of false positives or other types of issues with
+  # Reflex in case your server lags/freezes (even if that's just a few moments).
+  # Reflex implements some own lag-protection features to attempt to solve that.
+  server_performance_tracking:
+
+    # Enable Reflex's server lag self-protection? (RECOMMENDED!)
+    enabled: true
+
+    # How often (in milliseconds) (fixed rate) should Reflex check your server for
+    # lag using its so-called "player-packet-based" server performance tracker?
+    #
+    # NOTES:
+    #
+    #     (1) 1 second contains 1000 milliseconds; e.g. 2.5 s = 2500 ms, etc.
+    #
+    #     (2) the PP performance tracker works as a separate Java thread without using
+    #         any of the Bukkit's API, which also allows it to [mostly] work even if the
+    #         server is extremely lagging;
+    #
+    #     (3) the PP performance tracker only works when there are at least 2 online players on the server.
+    #
+    # Must be between 50 and 30000, otherwise an error will be thrown and Reflex will not start.
+    pp_track_freq: 750
+
+    # If there have been completely no packets from any online players for more than no_pp_trigger
+    # milliseconds (1 s = 1000 ms, 2.5 s = 2500 ms, etc.) registered by Reflex, a warning will be
+    # shown in server console, and some Reflex's components will disable until the lag stops.
+    #
+    # Every player should normally send at least 10-20 packets per second.
+    # Must be between 50 and 30000, otherwise an error will be thrown and Reflex will not start.
+    no_pp_trigger: 150
+
   # Should Reflex kick all online players away when the
   # server is reloading? Disabling this might cause some
   # (or many) reload incompatibility issues
@@ -377,7 +409,6 @@ killaura:
     %break%
     &r&cIf you believe that this is a false positive,%break%
     &cplease contact server administrators.&r%break%
-    &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
     %break%
     &7Kick ID: &f%id%%break%
     &7%date%"
@@ -442,15 +473,9 @@ badpackets:
        %break%
        &r&cIf you believe that this is a false positive,%break%
        &cplease contact server administrators.&r%break%
-       &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
        %break%
        &7Kick ID: &f%id%%break%
        &7%date%"
-    # Reaching a violation level of 9999+ on BadPackets GUARANTEES
-    # that the player has got cheats installed on their computer
-    # (no matter if they are using them at the moment or not).
-    9999:
-    #- "tempban %player% 5d &cYou are banned for cheating. Delete any cheats from your computer before appealing."
 
 
 
@@ -504,7 +529,6 @@ criticals:
     %break%
     &r&cIf you believe that this is a false positive,%break%
     &cplease contact server administrators.&r%break%
-    &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
     %break%
     &7Kick ID: &f%id%%break%
     &7%date%"
@@ -562,7 +586,6 @@ blockactions:
     %break%
     &r&cIf you believe that this is a false positive,%break%
     &cplease contact server administrators.&r%break%
-    &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
     %break%
     &7Kick ID: &f%id%%break%
     &7%date%"
@@ -571,7 +594,7 @@ blockactions:
 
 
 # The InvActions check prevents players from doing technically impossible
-# inventory actions such as moving with opened inventory and more.
+# inventory actions such as moving with open inventory, clicking too quickly, and other.
 invactions:
 
   # Enable this check?
@@ -618,7 +641,6 @@ invactions:
     %break%
     &r&cIf you believe that this is a false positive,%break%
     &cplease contact server administrators.&r%break%
-    &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
     %break%
     &7Kick ID: &f%id%%break%
     &7%date%"
@@ -634,6 +656,18 @@ antiknockback:
 
   # Enable this check?
   enabled: true
+
+  # Turn this on if you don't want this check to cancel any illegal actions
+  silent: false
+
+  # Should Reflex use different cancel thresholds for each check?
+  # This will result in way more accurate and smart cancel system
+  dynamic_cancel_thresholds: true
+
+  # If a player exceeds the number of violations below, their next
+  # suspicious actions will be suspended. Only effective if
+  # "dynamic_cancel_thresholds" is set to false
+  cancel_threshold: 5
 
   # Here you can put a list of checks you don't wish to use for some reason.
   #
@@ -660,7 +694,6 @@ antiknockback:
     %break%
     &r&cIf you believe that this is a false positive,%break%
     &cplease contact server administrators.&r%break%
-    &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
     %break%
     &7Kick ID: &f%id%%break%
     &7%date%"
@@ -679,6 +712,10 @@ vehiclemove:
 
   # Turn this on if you don't want this check to cancel any illegal actions
   silent: false
+
+  # Should Reflex use different cancel thresholds for each check?
+  # This will result in way more accurate and smart cancel system
+  dynamic_cancel_thresholds: true
 
   # If a player exceeds the number of violations below,
   # all their next suspicious actions will be suspended
@@ -709,7 +746,6 @@ vehiclemove:
     %break%
     &r&cIf you believe that this is a false positive,%break%
     &cplease contact server administrators.&r%break%
-    &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
     %break%
     &7Kick ID: &f%id%%break%
     &7%date%"
@@ -718,7 +754,7 @@ vehiclemove:
 
 
 # The ElytraMove check strictly limits Elytra movement of players, thus attempting
-# to enfore vanilla Elytra movement/gliding/flying mechanics and detecting cheats
+# to enforce vanilla Elytra movement/gliding/flying mechanics and detecting cheats
 # like Elytra+/ElytraFly/ElytraSpeed and related.
 elytramove:
 
@@ -727,6 +763,10 @@ elytramove:
 
   # Turn this on if you don't want this check to cancel any illegal actions
   silent: false
+
+  # Should Reflex use different cancel thresholds for each check?
+  # This will result in way more accurate and smart cancel system
+  dynamic_cancel_thresholds: true
 
   # If a player exceeds the number of violations below,
   # all their next suspicious actions will be suspended
@@ -756,23 +796,22 @@ elytramove:
   #
   # The names of all the VehicleMove components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
-    - "example entry"
+  - "example entry"
 
   # List of worlds where Reflex will not check anyone for ElytraMove
   disabled_worlds:
-    - "lobby"
+  - "lobby"
 
   # Command map
   actions:
     240:
-      - "reflex bypass %player% %check% true"
-      - "reflex delay 15 reflex kick %player%
+    - "reflex bypass %player% %check% true"
+    - "reflex delay 15 reflex kick %player%
     &fYou were just kicked.%break%
     &fReason: &b&lDETECTED FOR CHEATING&r%break%
     %break%
     &r&cIf you believe that this is a false positive,%break%
     &cplease contact server administrators.&r%break%
-    &c(&nmake sure to remove ANY cheating software from your computer first, EVEN UNUSED&r&c)%break%
     %break%
     &7Kick ID: &f%id%%break%
     &7%date%"
