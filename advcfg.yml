@@ -316,6 +316,68 @@ invact:
     # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
     open_wait: 500
 
+  # Advanced options for component invact.fiv
+  #
+  #     Restricts inventory-clicking/chest-looting rates.
+  #     Prevents cheaters from using very blatant ChestStealer/AutoLoot hacks.
+  #
+  #     NOTE: Reflex only counts clicks at items in different slots WITH SOMETHING IN THEM.
+  #           Clicking at the same slot OR at slots without items is NOT checked.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★☆☆☆  (2/5 - useful in some cases or for some certain types of cheats)
+  fiv:
+
+    # Most checks in Reflex, including the main invact.fiv subcomponent, are packet-based.
+    # That is, instead of listening to Bukkit events which provide no proper ways for a smooth
+    # lag accounting system, this check only watches packets sent by players and analyzes them.
+    # However, due to some changes made to the game protocol in 1.9, it became impossible to
+    # create a proper packet-based check on new versions. That's why our nicer (packet) check
+    # only works on 1.8x, sadly.
+    #
+    # In order to provide some basic (though a bit worse) protection for servers running new
+    # Minecraft versions, there is also a "classic" (event-based) check in Reflex. This option
+    # specifies whether you want to use that check or not. We advise you not to run both packet
+    # and event checks concurrently - that's useless and may cause problems.
+    #
+    # Possible values:
+    #
+    #     (a) auto  - let Reflex decide for you (RECOMMENDED). The check will be automatically
+    #                enabled on 1.9+ and disabled on 1.8x.
+    #
+    #     (b) true  - enable the event-based invact.fiv check.
+    #
+    #     (c) false - disable the event-based invact.fiv check.
+    #
+    # Reflex will self-disable with an error if an invalid value is set here.
+    enable_event_check: auto
+
+    # If a player does more than one click in the number of milliseconds* specified below,
+    # they will be suspected and given violations. This only affects the event-check, and
+    # therefore also requires the event-check to be active (either with 'auto' + 1.9+ server
+    # or with 'true' set on the 'enable_event_check' option above).
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    min_event_click_delay: 75
+
+    # If a player does more than one click in the number of ticks* specified below,
+    # they will be suspected and given violations.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_click_delay: 2
+
+    # If a player will receive more than {const_clicking_threshold} consistent clicking
+    # suspicions within {const_click_lifespan} milliseconds*, they will be given many
+    # violations (failing this check 2-3 times is enough to be kicked from the server by default).
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    const_click_lifespan: 2250
+
+    # If a player has clicked more than {const_clicking_threshold} times in a row
+    # at an approximately equal ("consistent") rate, they will be given a suspicion.
+    # Learn more about this option by reading comment to the one above ('const_click_lifespan').
+    const_clicking_threshold: 17
+
 
 
 
