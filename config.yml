@@ -34,6 +34,13 @@
 
 
 
+# Should Reflex show how long it takes for its files to download?
+#
+# PLEASE ENABLE IF YOU SERVER IS IN CHINA AND TELL US THE RESULTS --> https://g.reflex.rip/discord
+# 请启用，如果你的服务器是在中国，并告诉我们的结果 --> https://g.reflex.rip/discord
+debug_downloads: false
+
+
 # General plugin settings
 general:
 
@@ -222,6 +229,10 @@ general:
   #
   # (!) BY ENABLING THIS SETING YOU AGREE TO THE TERMS LISTED ON THE PAGE ABOVE
   unlock_advanced_settings: false
+
+  # Annoyed of those friendly welcome messages on startup ("...Thanks for choosing Reflex...")?
+  # You can easily disable them - just set this option to true
+  disable_welcome_message: false
 
   # Reflex caches (temporarily stores in RAM) some stuff in order to optimize some of
   # its parts or to make it compatible with other plugins. Here you can tweak what
