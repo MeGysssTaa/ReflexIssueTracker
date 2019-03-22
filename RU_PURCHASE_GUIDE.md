@@ -1,5 +1,5 @@
 **(i)** This article aims to help people from Russia with purchasing Reflex. Such article is needed due to PayPal restrictions.
-**Everything below is written in Russian and is completely unimportant for anyone who live in a different country.**
+**Everything below is written in Russian and is completely unimportant for anyone who lives in a different country.**
 
 
 # Как купить Reflex
