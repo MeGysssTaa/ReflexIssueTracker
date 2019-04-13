@@ -1,6 +1,8 @@
 # Reflex Issue Tracker
 
-Welcome here! This repository is created for many reasons, including these:
+## Welcome to the **[Reflex Anticheat](https://g.reflex.rip/spigot)** issue tracker!
+
+This repository is created for many reasons, including these:
 
 1. Developers can easily maintain Reflex related issues.
 2. People can see Reflex progress and avoid creating repetitive issues all the time.
