@@ -36,13 +36,32 @@
 
 # Should Reflex show how long it takes for its files to download?
 #
-# PLEASE ENABLE IF YOU SERVER IS IN CHINA AND TELL US THE RESULTS --> https://g.reflex.rip/discord
+# PLEASE ENABLE IF YOUR SERVER IS IN ASIA AND TELL US THE RESULTS --> https://g.reflex.rip/discord
 # 请启用，如果你的服务器是在中国，并告诉我们的结果 --> https://g.reflex.rip/discord
+# サーバーがアジアにある場合は有効にして、結果を教えてください --> https://g.reflex.rip/discord
 debug_downloads: false
 
 
 # General plugin settings
 general:
+
+  # We have got several servers in different points of the globe to improve performance
+  # and speed for users who live far away from Europe or experience strange routing (hello GFW!).
+  # You can choose one of the following:
+  #
+  #     auto      - determine best server automatically on each startup, according to
+  #                 the estimated/tested ping, download speed and routing quality.
+  #
+  #     eu        - our primary server, in Germany. Best for users whose servers are
+  #                 either in Europe or in Russia (specifically, in its Western part).
+  #
+  #     usa_china - our second server, located in the USA. Firstly, it is the best option
+  #                 for those whose server is located in the States. Secondly, our American
+  #                 server has got DIRECT CHINA ROUTING, which means that all traffic to China
+  #                 will go directly, bypassing all third countries like Japan/Hong Kong.
+  #                 This means that this option is also good for those whose server is located
+  #                 in Asia, e.g. China, Taiwan, Hong Kong, Singapore, Japan, South Korea.
+  server: 'auto'
 
   # Should Reflex use SSL secure connections?
   # (!) Disable if you are getting "SSL Handshake" errors on startup
@@ -172,6 +191,12 @@ general:
     # Must be between 50 and 30000, otherwise an error will be thrown and Reflex will not start.
     no_pp_trigger: 150
 
+  # Reflex uses fixed thread pools for its asynchronous tasks.
+  # Here you can specify the maximal allowed number of threads Reflex will use.
+  # This number must be between 1 and 100. Too many threads = CPU overload. Not
+  # enough threads = checking queues and high outages, especially with Cloud active.
+  max_thread_count: 10
+
   # Should Reflex kick all online players away when the
   # server is reloading? Disabling this might cause some
   # (or many) reload incompatibility issues
@@ -231,7 +256,7 @@ general:
   unlock_advanced_settings: false
 
   # Annoyed of those friendly welcome messages on startup ("...Thanks for choosing Reflex...")?
-  # You can easily disable them - just set this option to true
+  # You can easily disable them - just set this option to true. Also disables Moonlight advertisements in console.
   disable_welcome_message: false
 
   # Reflex caches (temporarily stores in RAM) some stuff in order to optimize some of
@@ -381,19 +406,17 @@ killaura:
   #     0 - detects many "legit-like" Aimbot/AimAssist hacks.
   #         Extremely unstable, might cause lots of false kicks.
   #
-  #     1 - < RECOMMENDED ! > detects most combat cheats which give
-  #         hacker either slight or significant unfair advantage.
+  #     1 - detects most combat cheats which give hacker
+  #         either slight or significant unfair advantage.
   #         A few rare false positives may sometimes occur.
   #
-  #     2 - only detects obvious Killaura and Aimbot hacks,
+  #     2 - [default] only detects obvious Killaura and Aimbot hacks,
   #         though with minimal number of false positives.
-  #
-  # (!) Severity of 1 is pretty stable and is HIGHLY recommended.
   #
   # If you don't really care about bypasses, and just want
   # obviously unfair cheats to be detected with as small
   # number of false positives as possible, use severity of 2
-  heuristics_severity: 1
+  heuristics_severity: 2
 
   # Here you can put a list of checks you don't wish to use for some reason.
   #
@@ -459,6 +482,16 @@ badpackets:
   # "dynamic_cancel_thresholds" is set to false
   cancel_threshold: 1
 
+  # There are cheats/modifications that allow players to slow down ticking speed of
+  # their client (we refer those to as "Reverse Timers" since they're basically the
+  # opposite thing to normal "Timers", but slow everything down instead of speeding up).
+  # Using those, cheaters are able to make anticheats believe they are lagging and abuse
+  # some stuff to make them fall down way slower than usual. With some small tweaking and
+  # rare midair boosts, this results in 10-20-blocks "Glide" bypasses for several popular
+  # anticheats. Reflex can fix that. Enabling this check tells Reflex to drag players down
+  # a few blocks each time they make a comparably distant move in midair while lagging.
+  midair_lag_dragdown: true
+
   # Here you can put a list of checks you don't wish to use for some reason.
   #
   # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
@@ -479,14 +512,14 @@ badpackets:
     5:
     - "reflex bypass %player% %check% true"
     - "reflex delay 15 reflex kick %player%
-       &fYou were just kicked.%break%
-       &fReason: &b&lDETECTED FOR CHEATING&r%break%
-       %break%
-       &r&cIf you believe that this is a false positive,%break%
-       &cplease contact server administrators.&r%break%
-       %break%
-       &7Kick ID: &f%id%%break%
-       &7%date%"
+    &fYou were just kicked.%break%
+    &fReason: &b&lDETECTED FOR CHEATING&r%break%
+    %break%
+    &r&cIf you believe that this is a false positive,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Kick ID: &f%id%%break%
+    &7%date%"
 
 
 
@@ -626,6 +659,10 @@ invactions:
   # Prevents from walking and rotating while inventory is opened.
   # Detects InvWalk and some AutoArmor/Killaura hacks
   block_movement: true
+
+  # Should inventories whose holder is not a BlockState be excluded
+  # from inventory click speed checking? (Fixes false flags in stuff like BedWars shops.)
+  exclude_non_blocks: true
 
   # Here you can put a list of checks you don't wish to use for some reason.
   #
@@ -1059,3 +1096,53 @@ clientcontrol:
 
   # Command map (unused)
   actions: {}
+
+
+
+
+#### Reflex Moonlight Configuration ####################################
+#
+#   Reflex has also got an extended version with more cool extra
+# features, which was named "Moonlight" for completely no specific
+# reasons. Here you can customize the Moonlight stuff.
+#
+#   Learn more about Reflex Moonlight:
+#   --> https://g.reflex.rip/moonlight
+#
+########################################################################
+moonlight:
+
+  # Insert your Moonlight (NOT CLOUD!) key here in order to activate Moonlight.
+  # Learn more: https://g.reflex.rip/moonlight
+  key: 'insert your key here'
+
+  # There is a magical way of exploiting Minecraft 1.8 clients that
+  # lets Reflex know if a player has cheats installed on their computer
+  # (no matter if they are using them at the moment or not). Please note
+  # that doing so is illegal (seriously, by law) in most of countries
+  # without a prior notification. So make sure that you notify your players
+  # about the existence of this check if you want to run all-white (something
+  # like "By continuing to play on our servers you agree that we may check
+  # files installed on your computer during your gameplay.").
+  #
+  # Enable client checking (for 1.8 clients, server version does not matter)?
+  # Players who will be detected by this check will get 9999+ VLs on BadPackets.
+  enable_client_checking: false
+
+  # Should Reflex attempt to mask itself (create the feeling of non-presence)
+  # from non-OP (regular) players? If so, how should it do that? Allowed values:
+  #
+  #     no      - do not hide Reflex. (default)
+  #
+  #     command - print the default Spigot unknown command message (usually from spigot.yml)
+  #               to users who type "/reflex" without OP permissions.
+  #
+  #     deep    - similar to 'command', but also disables tab-complete for "/reflex" command
+  #               for players without OP permissions, and also hides the command from MC 1.13's
+  #               command suggestions/help pop-up when possible.
+  #
+  # Please note that no matter what you choose, there are always ways to find out which
+  # anticheat(s) a server is using because all anticheats behave differently. This also
+  # won't enhance your server security at all. A proper anticheat will never be bypassed
+  # just because a hacker knows it is being used (and Reflex is one of those).
+  hide_reflex: 'no'
