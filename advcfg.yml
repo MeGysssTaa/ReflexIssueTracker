@@ -48,7 +48,7 @@
 ########################################################################
 name: 'Default Configuration'
 provider: 'Reflex Development Team'
-version: '2'
+version: '3'
 
 
 
@@ -133,7 +133,22 @@ ka:
     # rare cases. It is not adviced to set the weight of this check
     # to anything lower than 4-5 because that will make it barely
     # effective. Setting this to something very high is also bad
-    weight: 7
+    weight: 6
+
+    # When players attack the front entities spawned by Reflex, the hit
+    # is forwarded ("passed through") to their original target. However,
+    # this will only happen if the distance between the player and their
+    # original target is smaller than the number specified below.
+    #
+    # NB: in this case we use Bukkit's simple Location#distance for calculation.
+    #
+    # The legacy option is applied to 1.8 servers (or 1.9+ with force_legacy_mechanics: true).
+    # The modern option is applied to 1.9+ servers with modern Minecraft combat mechanics.
+    #
+    # This feature is temporary and we are planning to rework the FrontEntity check
+    # to combine it with Hitbox (ka.hbx) to allow better interaction and accuracy.
+    legacy_passthrough_range: 3.75
+    modern_passthrough_range: 4.25
 
   # Advanced options for component ka.heu
   #
@@ -234,6 +249,63 @@ ka:
     # How many violations will the Hitbox instant check add at once?
     # See the {max_lowest} option above for more information about Hitbox Instant.
     instant_weight: 15
+
+  # Advanced options for component ka.mira
+  #
+  #     MIRA stands for "Model for In-depth Rotations Analysis".
+  #     It is a new experimental check for detecting a wide range of
+  #     Aimbot and KillAura cheats with as least false positives as
+  #     possible. Although MIRA was designed to mostly focus on accuracy,
+  #     it is still very effective at catching up hacks not detected by
+  #     other checks in a comparably short period of time.
+  #
+  # (i) MIRA is a Self-Organizing Map (aka Kohonen network). It uses a
+  #     file with datasets pre-trained by us (the developers) for training.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
+  mira:
+
+    # If MIRA classifies a player as a cheater, but the probability percent
+    # is lower than this number, then the player will be treated legit.
+    min_cheating_prob: 80.0
+
+    # The number of violations added by MIRA upon detection depends on
+    # the number of times the player was suspected by MIRA within the last
+    # {suspicion_lifespan} milliseconds*.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 30000
+
+    # The number of violations added by MIRA upon detection is equal to
+    # RECENT_VIOLATIONS * {vl_per_suspicion}. See setting {suspicion_lifespan}.
+    vl_per_suspicion: 16
+
+  # Advanced options for component ka.ra
+  #
+  #     Monitors many combat behavior aspects of a player and utilizes
+  #     a variety of techniques in one to detect practically every KillAura
+  #     that gives cheater any significant advantage in fights.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
+  ra:
+
+    # How many hits do players have to do before their combat patterns are analyzed?
+    check_time: 10
+
+    # What attack range* should be considered "blatant"? Higher values will reduce
+    # the number of possible false positives (which should actually be extremely low
+    # because of the idea of this check itself), however, will significantly reduce
+    # the number of KillAura cheats detected. Setting this to anything lower than 3.0
+    # is not recommended and will probably result in everyone being detected falsely.
+    blatant_range: 3.9
+
+    # Based on many factors, this check computes average "cheating probability"
+    # percent for players' combat. If the computed probability (that is, the
+    # likelihood that a particular player has used KillAura in a particular fight)
+    # is greater than or equal to this number, they will be given many violations.
+    max_probability: 75.0
 
   # Advanced options for component ka.yrt
   #
