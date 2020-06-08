@@ -428,7 +428,8 @@ killaura:
   #
   # The names of all the KillAura components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
-  - "example entry"
+  - "ka.drn" # legacy, replaced with ka.hbx
+  - "ka.pts" # may be unstable on some servers
 
   # List of worlds where Reflex will not check anyone for KillAura
   disabled_worlds:
@@ -520,6 +521,17 @@ badpackets:
     &cplease contact server administrators.&r%break%
     %break%
     &7Kick ID: &f%id%%break%
+    &7%date%"
+    # For Moonlight checks - https://g.reflex.rip/moonlight
+    10000:
+    - "ban %player%
+    &fYou are banned.%break%
+    &fReason: &b&lDETECTED FOR CHEATING&r%break%
+    %break%
+    &r&cIf you would like to appeal,%break%
+    &cplease contact server administrators.&r%break%
+    %break%
+    &7Ban ID: &f%id%%break%
     &7%date%"
 
 
@@ -657,9 +669,14 @@ invactions:
   # "dynamic_cancel_thresholds" is set to false
   cancel_threshold: 5
 
-  # Prevents from walking and rotating while inventory is opened.
-  # Detects InvWalk and some AutoArmor/Killaura hacks
+  # Prevents from walking and rotating while inventory is open.
+  # Detects InventoryWalk and some AutoArmor/KillAura cheats
   block_movement: true
+
+  # Should the 'block_movement' feature (see above) teleport cheaters back
+  # a few blocks, thus fully preventing them from using InventoryWalk? If
+  # false, then the 'block_movement' feature will simply close their inventory
+  do_setback: true
 
   # Should inventories whose holder is not a BlockState be excluded
   # from inventory click speed checking? (Fixes false flags in stuff like BedWars shops.)
