@@ -1149,6 +1149,13 @@ moonlight:
   # >> https://github.com/MeGysssTaa/ReflexIssueTracker/wiki/Moonlight-Client-Checking
   enable_client_checking: false
 
+  # Should client checking (see option above) allow players to have AAL (AlphaAntiLeaK)
+  # installed? In a nutshell, AAL is a launcher that's used by developers to protect their
+  # applications. Sadly, most of the applications hosted at AAL are hacked clients. However,
+  # there are also some legitimate Minecraft "PvP" clients as well - for example, Lunar Client.
+  # Set this option to true if you have many fair players using such clients.
+  allow_aal: false
+
   # Should Reflex attempt to mask itself (create the feeling of non-presence)
   # from non-OP (regular) players? If so, how should it do that? Allowed values:
   #
