@@ -27,7 +27,7 @@
 #          --> https://g.reflex.rip/spigot
 #
 #   With love, Reflex Development Team.
-#   © reflex.rip, 2016-2020.
+#   © reflex.rip, 2016-2021.
 #
 ########################################################################
 
@@ -62,10 +62,6 @@ general:
   #                 This means that this option is also good for those whose server is located
   #                 in Asia, e.g. China, Taiwan, Hong Kong, Singapore, Japan, South Korea.
   server: 'auto'
-
-  # Should Reflex use SSL secure connections?
-  # (!) Disable if you are getting "SSL Handshake" errors on startup
-  use_ssl: true
 
   # Where should the data files be saved? Data files contain info
   # about players banned, different constants & algorithms, etc.
@@ -191,12 +187,6 @@ general:
     # Must be between 50 and 30000, otherwise an error will be thrown and Reflex will not start.
     no_pp_trigger: 150
 
-  # Reflex uses fixed thread pools for its asynchronous tasks.
-  # Here you can specify the maximal allowed number of threads Reflex will use.
-  # This number must be between 1 and 100. Too many threads = CPU overload. Not
-  # enough threads = checking queues and high outages, especially with Cloud active.
-  max_thread_count: 10
-
   # Should Reflex kick all online players away when the
   # server is reloading? Disabling this might cause some
   # (or many) reload incompatibility issues
@@ -224,6 +214,15 @@ general:
   # Enable verbose on join automatically for all players
   # who have got the 'reflex.verbose' permission
   verbose_on_connect: false
+
+  # Should Reflex periodically collect server setup and configurations and Reflex logs
+  # and send them to the Reflex servers? This will make reporting bugs, and, in particular,
+  # misdetections (false positives and/or bypasses), a lot simpler, since you will no longer
+  # have to repeatedly send us your Reflex logs and "/reflex debug" output manually.
+  #
+  # For details and privacy policy related to this feature visit:
+  # --> https://g.reflex.rip/cloud-verbose
+  cloud_verbose: false
 
   # If enabled, Reflex will write verbose messages (the same
   # as with /reflex verbose) in special files saved in
@@ -373,7 +372,45 @@ killaura:
   # NPCs will move far away unless they are back to combat. Useful to
   # stop Reflex from interrupting world interaction with its bots.
   # Set this to -1 to always keep the NPCs near players.
-  npc_max_nocombat: 2900
+  npc_max_nocombat: 2250
+
+  # List of block types that players are allowed to attack through.
+  # Reflex uses the "contains" check. That is, if the block a player
+  # is looking at during attacking contains one of the words listed
+  # below, the hit will be registered as legitimate. Material types:
+  # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  #
+  # AIR and liquid blocks are considered pierceable by default.
+  # GRASS_BLOCK is considered non-pierceable by default (to allow making GRASS pierceable).
+  pierceable_blocks:
+    - "FENCE"
+    - "GATE"
+    - "DOOR"
+    - "GLASS_PANE"
+    - "THIN_GLASS"
+    - "BANNER"
+    - "HEAD"
+    - "SKULL"
+    - "LEVER"
+    - "PRESSURE_PLATE"
+    - "STAIR"
+    - "LADDER"
+    - "VINE"
+    - "ANVIL"
+    - "SLAB"
+    - "SNOW"
+    - "FLOWER"
+    - "MUSHROOM"
+    - "HOOK"
+    - "CARPET"
+    - "BED"
+    - "BUTTON"
+    - "LILY"
+    - "SIGN"
+    - "TORCH"
+    - "DUST"
+    - "DETECTOR"
+    - "RAIL"
 
   # Reflex can take snapshots of players' behaviour that gets
   # passed to the machine learning check and either save those
@@ -428,7 +465,7 @@ killaura:
   #
   # The names of all the KillAura components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
-  - "ka.drn" # legacy, replaced with ka.hbx
+  - "ka.drn" # legacy, replaced with ka.ray
   - "ka.pts" # may be unstable on some servers
 
   # List of worlds where Reflex will not check anyone for KillAura
@@ -492,7 +529,7 @@ badpackets:
   # rare midair boosts, this results in 10-20-blocks "Glide" bypasses for several popular
   # anticheats. Reflex can fix that. Enabling this check tells Reflex to drag players down
   # a few blocks each time they make a comparably distant move in midair while lagging.
-  midair_lag_dragdown: true
+  midair_lag_dragdown: false
 
   # Here you can put a list of checks you don't wish to use for some reason.
   #
