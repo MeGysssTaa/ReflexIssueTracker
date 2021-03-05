@@ -33,7 +33,7 @@
 #          --> https://g.reflex.rip/spigot
 #
 #   With love, Reflex Development Team.
-#   © reflex.rip, 2016-2020.
+#   © reflex.rip, 2016-2021.
 #
 ########################################################################
 
@@ -48,7 +48,7 @@
 ########################################################################
 name: 'Default Configuration'
 provider: 'Reflex Development Team'
-version: '3'
+version: '4'
 
 
 
@@ -285,27 +285,90 @@ ka:
   #
   #     Monitors many combat behavior aspects of a player and utilizes
   #     a variety of techniques in one to detect practically every KillAura
-  #     that gives cheater any significant advantage in fights.
+  #     that gives cheater any significant advantage in fights. Unlike many
+  #     other checks, this one should be nearly absolutely accurate and safe.
   #
-  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Accuracy:   ★★★★★  (5/5 - awesome)
   # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
   ra:
 
     # How many hits do players have to do before their combat patterns are analyzed?
     check_time: 10
 
-    # What attack range* should be considered "blatant"? Higher values will reduce
-    # the number of possible false positives (which should actually be extremely low
-    # because of the idea of this check itself), however, will significantly reduce
-    # the number of KillAura cheats detected. Setting this to anything lower than 3.0
-    # is not recommended and will probably result in everyone being detected falsely.
-    blatant_range: 3.9
-
     # Based on many factors, this check computes average "cheating probability"
     # percent for players' combat. If the computed probability (that is, the
     # likelihood that a particular player has used KillAura in a particular fight)
-    # is greater than or equal to this number, they will be given many violations.
-    max_probability: 75.0
+    # is greater than or equal to this number, they will be given a suspicion and
+    # a few violations (but never more than a few tens).
+    max_probability: 85.0
+
+    # After how many milliseconds* will ka.ra's suspicions be forgotten?
+    # See options above and below as well.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 90000
+
+    # If upon getting a new ka.ra's suspicion player's number of suspicions from this component
+    # within the last {suspicion_lifespan} milliseconds is greater than this {threshold}, then
+    # this player will be given a lot of violations (enough for an instant kick/punishment).
+    # Properly configured, this check will never flag legitimate players enough for a kick.
+    threshold: 1
+
+  # Advanced options for component ka.ray
+  #
+  #     Combines hitbox (attack angle & range), block raytrace (attacking through
+  #     non-pierceable blocks), and entity raytrace (attacking through fake client-side
+  #     entities/bots) checks. Works by basically raycasting player's direction vector
+  #     through the world until the cursor intersects with bounding box of a block or
+  #     an entity or until the configured limit of steps is reached. Makes it impossible
+  #     to use really blatant KillAura/Reach/Hitbox cheats.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  ray:
+
+    # Player direction vector multiplier. Smaller numbers will result in slightly more
+    # accurate raycasting but will make the process slower (more performance impact).
+    raycast_precision: 0.05
+
+    # The number of blocks Reflex should artificially expand hitboxes of entities by.
+    # Smaller = stricter, but more false-positives-prone.
+    hitbox_expansion: 0.195
+
+    # If the raycast "cursor" did not intersect with any bounding box within the following
+    # number of steps (iterations), then the hit will be considered invalid (out of legitimate
+    # attack range or player not looking at the target properly).
+    max_raycast_steps: 70
+
+    # How many violations should Reflex give to players when they attack
+    # an entity out of legitimate range or without looking at it properly?
+    hitbox_weight: 1
+
+    # How many violations should Reflex give to players when they attack an
+    # entity through a non-pierceable block (such as stone, bricks, etc.)?
+    # 0 = disable block raytrace checking.
+    block_raytrace_weight: 2
+
+    # How many violations should Reflex give to players when they attack
+    # an entity through artificially created invisible bots (fake players)?
+    # 0 = disable entity raytrace checking.
+    entity_raytrace_weight: 5
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating.
+    # See excessive_violation_weight.
+    threshold: 12
+
+    # After how many milliseconds* will ka.ray's suspicions be forgotten?
+    # See excessive_violation_weight.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 20000
+
+    # If a player receives more than {threshold} suspicions on any of the ka.ray's
+    # subcomponents within {suspicion_lifespan} ms, they will instantly be given the
+    # following number of violations.
+    excessive_violation_weight: 18
 
   # Advanced options for component ka.yrt
   #
@@ -351,6 +414,12 @@ blckact:
     #
     # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
     min_dia: 5.0
+
+    # This option specifies whether Reflex should check players' bridging accuracy or not.
+    # It is impossible for most legit players to be absolutely accurate while bridging really
+    # quickly. However, if there are many players on your server who claim to be able to bridge
+    # really fast without a single mouse drag (which is really difficult), set this to false.
+    check_accuracy: true
 
   # Advanced options for component blckact.tw
   #
