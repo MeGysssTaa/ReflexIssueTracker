@@ -244,6 +244,15 @@ general:
   # it is recommended to set this setting to true to run more efficiently
   force_legacy_mechanics: false
 
+  # If enabled and if Floodgate API is not present, Reflex will treat all clients whose MC client
+  # brand is "Geyser" as Bedrock players. This will allow Reflex to determine whether a player
+  # is Java Edition or Bedrock Edition even if you don't have Floodgate installed. However, this
+  # check is naive, and may not be so safe to use -- hacked clients can spoof their MC client brand
+  # and claim that they are "Geyser" even if they are not. Use on your own risk.
+  #
+  # NOTE: this setting has no effect if Floodgate API is present on your server (either v1 or v2).
+  naive_bedrock_check: false
+
   # Should Reflex's checks' components acquire their settings
   # from local Advanced Configuration file (advcfg.yml)?
   #
@@ -383,6 +392,8 @@ killaura:
   # AIR and liquid blocks are considered pierceable by default.
   # GRASS_BLOCK is considered non-pierceable by default (to allow making GRASS pierceable).
   pierceable_blocks:
+    - "CAVE_AIR"
+    - "VOID_AIR"
     - "FENCE"
     - "GATE"
     - "DOOR"
@@ -465,7 +476,6 @@ killaura:
   #
   # The names of all the KillAura components can be found on our wiki: https://g.reflex.rip/wiki
   disabled_checks:
-  - "ka.drn" # legacy, replaced with ka.ray
   - "ka.pts" # may be unstable on some servers
 
   # List of worlds where Reflex will not check anyone for KillAura
