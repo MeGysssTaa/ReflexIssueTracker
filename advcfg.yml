@@ -117,39 +117,6 @@ ka:
     # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
     min_click_delay: 25
 
-  # Advanced options for component ka.fe
-  #
-  #     Spawns many invisible entities in front of player's cursor when they are
-  #     in combat. A legitimate player will always hit them, but many Killauras
-  #     (especially Vanilla/NCP ones) may hit through and get caught by this check.
-  #
-  # Accuracy:   ★★★★★  (5/5 - awesome)
-  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
-  fe:
-
-    # How many violations will the FrontEntity check add at once?
-    # The check itself is very well-known and has been stable for
-    # years, however, it might produce a few false positives in
-    # rare cases. It is not adviced to set the weight of this check
-    # to anything lower than 4-5 because that will make it barely
-    # effective. Setting this to something very high is also bad
-    weight: 6
-
-    # When players attack the front entities spawned by Reflex, the hit
-    # is forwarded ("passed through") to their original target. However,
-    # this will only happen if the distance between the player and their
-    # original target is smaller than the number specified below.
-    #
-    # NB: in this case we use Bukkit's simple Location#distance for calculation.
-    #
-    # The legacy option is applied to 1.8 servers (or 1.9+ with force_legacy_mechanics: true).
-    # The modern option is applied to 1.9+ servers with modern Minecraft combat mechanics.
-    #
-    # This feature is temporary and we are planning to rework the FrontEntity check
-    # to combine it with Hitbox (ka.hbx) to allow better interaction and accuracy.
-    legacy_passthrough_range: 3.75
-    modern_passthrough_range: 4.25
-
   # Advanced options for component ka.heu
   #
   # Uses a neural network with pre-trained (by us, the developers, with
@@ -189,97 +156,6 @@ ka:
     # for a legit player to achieve. When the NN is really "certain" the
     # player is cheating, then most often they really do
     certain_cp_threshold: 2
-
-  # Advanced options for component ka.hbx
-  #
-  #     This check works by finding the best (not mandatory the most recent)
-  #     hitbox of a player's target and then trying to reach it by "moving"
-  #     {precision} blocks forward until the total "movement" distance exceeds
-  #     a preliminarily calculated limit+{leniency}. If no target hitboxes
-  #     (especially no previously mentioned "best" one) were met during
-  #     this check, the player is suspected. If a player gets suspected by
-  #     the Hitbox check more than {threshold} times in {suspicion_lifespan}
-  #     milliseconds, then they are flagged and given KillAura violations.
-  #
-  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
-  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
-  hbx:
-
-    # The size of one "hitbox tracer" "step" in blocks.
-    # Higher precision => higher checking accuracy, but more performance impact;
-    # less precision => lower checking accuracy, but less performance impact
-    precision: 0.005
-
-    # The number of additional blocks "hitbox tracer" is allowed to "travel"
-    # after exceeding the preliminarily calculated limit before stopping.
-    # Higher leniency => less effective (way more lenient) check
-    leniency: 0.013
-
-    # The maximal number of suspicions a player is allowed to obtain in
-    # {suspicion_lifespan} milliseconds before being flagged for cheating
-    threshold: 7
-
-    # After how many milliseconds* will Hitbox's suspicions be forgotten?
-    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
-    suspicion_lifespan: 3000
-
-    # How many violations will the Hitbox period check add at once (after
-    # a player will score more than {threshold} suspicions in {...lifespan}
-    # milliseconds)? This check is designed to kick quickly but not instantly
-    period_weight: 20
-
-    # There is also another, instant check in this component, which flags
-    # with first violation. It is used to a) detect very blatant Reach/Hitbox
-    # cheats faster; b) help Reflex detecting less blatant/"somewhat bypassing"
-    # Killauras. A player is flagged if the lowest distance computed by Reflex*
-    # is greater than {max_lowest}.
-    #
-    # Getting many "hitbox (instant)" flags usually indicates that a player
-    # is very likely to be using Reach/Hitbox/Killaura cheats or similar.
-    #
-    # * [Reflex stores several hitboxes of a player's target in memory, and for
-    #    distance calculation it uses the one that it thinks fits "best" in current
-    #    situation. There are also several nuances in distance calculation, so it is
-    #    important that you DO NOT link Reflex's "lowest hitbox distance" with
-    #    ordinary Minecraft distances like "number of blocks from eye to eye".
-    #    This value is rather based on magic, so please refrain from touching it
-    #    unless you really know what you do.]
-    max_lowest: 1.679
-
-    # How many violations will the Hitbox instant check add at once?
-    # See the {max_lowest} option above for more information about Hitbox Instant.
-    instant_weight: 15
-
-  # Advanced options for component ka.mira
-  #
-  #     MIRA stands for "Model for In-depth Rotations Analysis".
-  #     It is a new experimental check for detecting a wide range of
-  #     Aimbot and KillAura cheats with as least false positives as
-  #     possible. Although MIRA was designed to mostly focus on accuracy,
-  #     it is still very effective at catching up hacks not detected by
-  #     other checks in a comparably short period of time.
-  #
-  # (i) MIRA is a Self-Organizing Map (aka Kohonen network). It uses a
-  #     file with datasets pre-trained by us (the developers) for training.
-  #
-  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
-  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
-  mira:
-
-    # If MIRA classifies a player as a cheater, but the probability percent
-    # is lower than this number, then the player will be treated legit.
-    min_cheating_prob: 80.0
-
-    # The number of violations added by MIRA upon detection depends on
-    # the number of times the player was suspected by MIRA within the last
-    # {suspicion_lifespan} milliseconds*.
-    #
-    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
-    suspicion_lifespan: 30000
-
-    # The number of violations added by MIRA upon detection is equal to
-    # RECENT_VIOLATIONS * {vl_per_suspicion}. See setting {suspicion_lifespan}.
-    vl_per_suspicion: 16
 
   # Advanced options for component ka.ra
   #
