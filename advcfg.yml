@@ -233,7 +233,7 @@ ka:
     # The maximal number of suspicions a player is allowed to obtain in
     # {suspicion_lifespan} milliseconds before being flagged for cheating.
     # See excessive_violation_weight.
-    threshold: 12
+    threshold: 11
 
     # After how many milliseconds* will ka.ray's suspicions be forgotten?
     # See excessive_violation_weight.
@@ -244,7 +244,7 @@ ka:
     # If a player receives more than {threshold} suspicions on any of the ka.ray's
     # subcomponents within {suspicion_lifespan} ms, they will instantly be given the
     # following number of violations.
-    excessive_violation_weight: 18
+    excessive_violation_weight: 16
 
   # Advanced options for component ka.yrt
   #
