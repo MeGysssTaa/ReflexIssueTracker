@@ -383,6 +383,11 @@ killaura:
   # Set this to -1 to always keep the NPCs near players.
   npc_max_nocombat: 2250
 
+  # Should Reflex disable its ForceField (basic NPC/bot) check when there
+  # is only one player online? This may be useful if you don't want your
+  # players to see random names in the tab list when they're alone on the server.
+  npc_disable_alone: false
+
   # List of block types that players are allowed to attack through.
   # Reflex uses the "contains" check. That is, if the block a player
   # is looking at during attacking contains one of the words listed
