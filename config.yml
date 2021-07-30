@@ -1,4 +1,4 @@
-#### Reflex Configuration ##############################################
+#### Reflex Advanced Configuration #####################################
 #
 #   Welcome here! Looks like you want to change something, am
 # I right? Before doing so, please note one thing: all the
@@ -10,6 +10,12 @@
 # or write us in Discord: g.reflex.rip/discord
 #
 #   PLEASE REFRAIN FROM TOUCHING ANYTHING WITHOUT SERIOUS REASONS TO!
+#
+#   Also keep in mind that this is ADVANCED configuration.
+# One tweak can break everything. Literally. Even your arm.
+#
+#   Learn more about Reflex AdvCfg:
+#   --> https://g.reflex.rip/advcfg
 #
 #   Useful links:
 #
@@ -34,1194 +40,562 @@
 
 
 
-# Should Reflex show how long it takes for its files to download?
-#
-# PLEASE ENABLE IF YOUR SERVER IS IN ASIA AND TELL US THE RESULTS --> https://g.reflex.rip/discord
-# 请启用，如果你的服务器是在中国，并告诉我们的结果 --> https://g.reflex.rip/discord
-# サーバーがアジアにある場合は有効にして、結果を教えてください --> https://g.reflex.rip/discord
-debug_downloads: false
-
-
-# General plugin settings
-general:
-
-  # We have got several servers in different points of the globe to improve performance
-  # and speed for users who live far away from Europe or experience strange routing (hello GFW!).
-  # You can choose one of the following:
-  #
-  #     auto      - determine best server automatically on each startup, according to
-  #                 the estimated/tested ping, download speed and routing quality.
-  #
-  #     eu        - our primary server, in Germany. Best for users whose servers are
-  #                 either in Europe or in Russia (specifically, in its Western part).
-  #
-  #     usa_china - our second server, located in the USA. Firstly, it is the best option
-  #                 for those whose server is located in the States. Secondly, our American
-  #                 server has got DIRECT CHINA ROUTING, which means that all traffic to China
-  #                 will go directly, bypassing all third countries like Japan/Hong Kong.
-  #                 This means that this option is also good for those whose server is located
-  #                 in Asia, e.g. China, Taiwan, Hong Kong, Singapore, Japan, South Korea.
-  server: 'auto'
-
-  # Where should the data files be saved? Data files contain info
-  # about players banned, different constants & algorithms, etc.
-  #
-  # %default_data_folder% will be replaced with '/{your_server_folder}/plugins/Reflex/'
-  #
-  # If you have a BungeeCord network on a single VPS, and don't
-  # want to use MySQL, make sure to specify the same working
-  # directory for all your servers!
-  working_directory: '%default_data_folder%'
-
-  # The selected theme dictates the design, the language and the format of all messages
-  # or their components Reflex sends. You can use one of pre-made themes, or create an
-  # own one (see the overview page for details). All themes are located in:
-  #     {working_directory}/themes
-  # (i.e. if you have set the 'working_directory' setting to '/home/server/mc/Reflex',
-  # then the themes will be located in the '/home/server/mc/Reflex/themes' directory.
-  #
-  # If set to %default%, Reflex will pick up an appropriate variant
-  # of the default theme with the language matching your system locale
-  theme: '%default%'
-
-  # Reflex can pickup themes individually for each player according
-  # to their client locale. For example, if a player will join your
-  # server with client language set to Russian, they will see Reflex's
-  # messages as in its Russian theme, even if the `theme` setting above
-  # is set to English. As the number of translations we provide is
-  # comparably low, some locales are "united" - players whose client
-  # language is set to Ukrainian or Belarussian will also see messages
-  # from the Russian locale (since all these languages are similar).
-  # If a player joins the server with client language that has no
-  # similar analogues, Reflex will use the language specified in the
-  # `theme` setting above for them (%default% - server system locale)
-  personalized_themes:
-
-    # Enable personalized themes? This improves user-experience a lot,
-    # especially if you have people all over the world playing together.
-    # If disabled, all players will see Reflex's messages in the language
-    # specified in the `theme` setting above despite their client locale
-    enabled: true
-
-    # Reflex themes names are designed in the following format:
-    #     GROUP_locale[-country],
-    # where "GROUP" is the name of the theme (the set of messages,
-    # styles and colors), "locale" is the language variant of the
-    # theme (for example, Reflex's default, "ModernBlue", theme has
-    # a variety of locales, e.g. "EN", "DE", "IT", etc., which only
-    # differ in the language the messages are written in). If a
-    # language has several significantly different variations,
-    # for example Chinese Traditional and Simplified, "-country"
-    # is added to the name, where "country" is the code of the country
-    # the language variation is mainly used in (example: zh-TW, pt-BR).
-    #
-    # If personalized themes are enabled, Reflex will look for a
-    # theme of the group specified in this setting with language
-    # matching (or being similar to) player's client locale. If
-    # the specified theme group does not contain any appropriate
-    # translations, Reflex will use the theme specified in the
-    # `theme` setting above (%default% - server system locale)
-    theme_group: 'ModernBlue'
-
-  # For bigger servers, Reflex provides a cloud computings system.
-  # This will make Reflex work this way:
-  #     (Your Server) Collect data for player and send it to the Cloud -> (Cloud) Process the data, compute results and send back to your server -> (Your Server) Execute commands, etc.
-  # instead of this:
-  #     (Your Server) Collect data for player, process it, compute results, and then execute commands etc.
-  # which will be a huge performance boost for your server, since it won't do any of heavy calculations itself.
-  # Those will be done by Reflex Cloud and returned as a result like "should kick" or "shouldn't kick" (with reasons)
-  cloud_computings:
-
-    # Defaults to false to avoid getting md_5 triggered
-    enabled: false
-
-    # Key is required to get access to the Cloud Computings feature. To get the key,
-    # contact developers on Spigot by PMing DarksideCode. Insert the key you got here
-    key: 'AAAAAAAAAA-BBBBBBBBBB-CCCCCCCCCC'
-
-    # The maximal amount of reconnection attempts Reflex should
-    # do before giving up (used in case of getting timed out).
-    max_reconnections: 5
-
-    # When Reflex loses connection to Cloud, and is unable to reconnect after
-    # {max_reconnections} attempts, it gives up reconnecting and loads all the
-    # checks data and switches to normal mode, performing stuff that was previously
-    # done by Cloud on your server, just like if Cloud Computings were disabled.
-    # However, for big servers/networks, it might not be good as then it means that
-    # Reflex might start using much resources on their servers. If you want Reflex to
-    # simply disable the Cloud-supported components in case of Cloud inaccessibility,
-    # set the option below to false. NOTE: THE DISABLED CHECKS WILL NOT WORK UNTIL
-    # SUCCESSFULLY CONNECTED TO CLOUD, WHICH, AFTER GIVE UP, CAN ONLY BE REACHED BY
-    # RESTARTING THE SERVER (OR RECONNECTING USING THE REFLEX API, IF POSSIBLE)
-    auto_switch: true
-
-  # There may be a variety of false positives or other types of issues with
-  # Reflex in case your server lags/freezes (even if that's just a few moments).
-  # Reflex implements some own lag-protection features to attempt to solve that.
-  server_performance_tracking:
-
-    # Enable Reflex's server lag self-protection? (RECOMMENDED!)
-    enabled: true
-
-    # How often (in milliseconds) (fixed rate) should Reflex check your server for
-    # lag using its so-called "player-packet-based" server performance tracker?
-    #
-    # NOTES:
-    #
-    #     (1) 1 second contains 1000 milliseconds; e.g. 2.5 s = 2500 ms, etc.
-    #
-    #     (2) the PP performance tracker works as a separate Java thread without using
-    #         any of the Bukkit's API, which also allows it to [mostly] work even if the
-    #         server is extremely lagging;
-    #
-    #     (3) the PP performance tracker only works when there are at least 2 online players on the server.
-    #
-    # Must be between 50 and 30000, otherwise an error will be thrown and Reflex will not start.
-    pp_track_freq: 750
-
-    # If there have been completely no packets from any online players for more than no_pp_trigger
-    # milliseconds (1 s = 1000 ms, 2.5 s = 2500 ms, etc.) registered by Reflex, a warning will be
-    # shown in server console, and some Reflex's components will disable until the lag stops.
-    #
-    # Every player should normally send at least 10-20 packets per second.
-    # Must be between 50 and 30000, otherwise an error will be thrown and Reflex will not start.
-    no_pp_trigger: 150
-
-  # Should Reflex kick all online players away when the
-  # server is reloading? Disabling this might cause some
-  # (or many) reload incompatibility issues
-  kick_on_reload: true
-
-  # Should Reflex block attempts to join the server before the plugin
-  # is fully loaded? It is highly recommended to keep this option ENABLED
-  # in order to prevent various issues with players joined before startup
-  require_startup_done: true
-
-  # Disable this if you don't want Reflex to log any violations
-  # at all, neither in the in-game chat, server logs nor console.
-  # (!) HIGHLY RECOMMENDED: YOU WILL NOT BE SUPPORTED REGARDING
-  #     FALSE POSITIVES OR BYPASSES IF YOU DISABLE THIS OPTION!
-  verbose: true
-
-  # Disable this if you don't want anyone, even with the neccessary
-  # permissions, to be able to see Reflex verbose in the game chat
-  ingame_verbose: true
-
-  # Should Reflex send notification messages
-  # (the same as with /reflex verbose) in the console?
-  console_verbose: false
-
-  # Enable verbose on join automatically for all players
-  # who have got the 'reflex.verbose' permission
-  verbose_on_connect: false
-
-  # Should Reflex periodically collect server setup and configurations and Reflex logs
-  # and send them to the Reflex servers? This will make reporting bugs, and, in particular,
-  # misdetections (false positives and/or bypasses), a lot simpler, since you will no longer
-  # have to repeatedly send us your Reflex logs and "/reflex debug" output manually.
-  #
-  # For details and privacy policy related to this feature visit:
-  # --> https://g.reflex.rip/cloud-verbose
-  cloud_verbose: false
-
-  # If enabled, Reflex will write verbose messages (the same
-  # as with /reflex verbose) in special files saved in
-  # {working_directory}/logs and named in format DD-MM-YYYY.log.
-  # Reflex makes one log per day. This means one log will contain
-  # everything happened in a day. 24 hours later, there will be
-  # a new file created with a new date containing the events of a new day
-  make_logs: true
-
-  # Should Reflex perform lag accounting when checking?
-  # Enable this if you want Reflex to adjust violations depending on
-  # players' Lag Points number. You can learn more about the LP system,
-  # and about Reflex Lag Accounting system in general, on the overview page
-  lag_leniency: true
-
-  # Reflex automatically disables or tweaks some components according to
-  # the server version (1.8 or 1.9+). If you are using some sort of a plugin
-  # that brings back legacy (1.8) combat mechanics to your 1.9+ server,
-  # it is recommended to set this setting to true to run more efficiently
-  force_legacy_mechanics: false
-
-  # If enabled and if Floodgate API is not present, Reflex will treat all clients whose MC client
-  # brand is "Geyser" as Bedrock players. This will allow Reflex to determine whether a player
-  # is Java Edition or Bedrock Edition even if you don't have Floodgate installed. However, this
-  # check is naive, and may not be so safe to use -- hacked clients can spoof their MC client brand
-  # and claim that they are "Geyser" even if they are not. Use on your own risk.
-  #
-  # NOTE: this setting has no effect if Floodgate API is present on your server (either v1 or v2).
-  naive_bedrock_check: false
-
-  # Should Reflex's checks' components acquire their settings
-  # from local Advanced Configuration file (advcfg.yml)?
-  #
-  # FOR MORE INFO SEE:
-  #
-  #     --> https://g.reflex.rip/advcfg
-  #
-  # (!) BY ENABLING THIS SETING YOU AGREE TO THE TERMS LISTED ON THE PAGE ABOVE
-  unlock_advanced_settings: false
-
-  # Annoyed of those friendly welcome messages on startup ("...Thanks for choosing Reflex...")?
-  # You can easily disable them - just set this option to true. Also disables Moonlight advertisements
-  # in console and chat (except for the one shown when typing "/reflex").
-  disable_welcome_message: false
-
-  # Reflex caches (temporarily stores in RAM) some stuff in order to optimize some of
-  # its parts or to make it compatible with other plugins. Here you can tweak what
-  # Reflex should cache (true), and what it shouldn't (false)
-  caching:
-
-    # Caching of config values is unlikely to be necessary unless you
-    # have some kind of a custom config reader that overrides Bukkit
-    # config caching. Disabled by default!
-    config: false
-
-    # Reflex caches its permissions ("reflex.*") for players in order
-    # to reduce the number of calls to the permissions system/plugin
-    permissions: true
-
-    # Reflex caches most of packets and their containers players send
-    # for around a minute in order to avoid repetitive reading of same
-    # packets, which can sometimes be very slow. Might take much RAM!
-    # DON'T ENABLE IF YOU HAVE A BUNGEECORD NETWORK WITH LOTS OF SERVERS!
-    packets: false
-
-  # /reflex [kick/ban] commands settings
-  reflex_kick:
-
-    # Should a player be killed if he is getting kicked using /reflex [kick/ban]?
-    kill: true
-
-    # Should there be a lightning bolt visual effect if
-    # someone is getting kicked using /reflex [kick/ban]?
-    strike_lightning: true
-
-    # Should Reflex broadcast a message when someone gets kicked using /reflex [kick/ban]?
-    broadcast: true
-
-  # This will allow you to implement your own database types and hook
-  # them with Reflex, so that Reflex will store it's bans and ML data
-  # in them. By default, MySQL is used. For more info ready the API
-  # guide on the Reflex overview page on SpigotMC
-  custom_db:
-
-    # Use custom database?
-    enabled: false
-
-    # A class that implements DatabaseClient. Used by
-    # Reflex to connect/disconnect to/from database
-    client: 'fully.qualified.ClassName'
-
-    # A class that implements DataImpl. Used by
-    # Reflex to store and load its ML data
-    data: 'fully.qualified.ClassName'
-
-    # A class that implements BanImpl. Used by
-    # Reflex to store and laod its bans
-    ban: 'fully.qualified.ClassName'
-
-    # A class that implements DailyLogFilePublisher.
-    # Used by Reflex to store its logs
-    log: 'fully.qualified.ClassName'
-
-
-
-
-# The Killaura check covers a wide range of combat hacks and
-# detects most of unfair combat enhancements such as Killaura,
-# Aimbot, some sorts of AimAssist and autoclicker, and more.
-killaura:
-
-  # Enable this check?
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below, their next
-  # suspicious actions will be suspended. Only effective if
-  # the "dynamic_cancel_thresholds" option is set to false
-  cancel_threshold: 10
-
-  # When Reflex cancels hits it belives are illegal it also prevents
-  # suspected players from attacking any entities for time specified
-  # in this option (milliseconds, 1 s = 1000 ms). Only effective if the
-  # `silent` option above is set to false. 0 = no attack penalty
-  penalty_time: 1500
-
-  # As of 1.9, players can collide with each other. This means that 1.9+
-  # players on 1.8 ViaVersion servers (or on 1.9+ servers) might get moved
-  # randomly sometimes. This is caused by colliding with Reflex's NPCs.
-  # Should Reflex make attempts to disable these collisions?
-  disable_collisions: true
-
-  # Disable this if you're experiencing lots of false
-  # "entity raytrace" flags (/reflex verbose to see them)
-  realistic_entityids: true
-
-  # Disable this if you don't want random nametags to be floating around you
-  realistic_playerdata: true
-
-  # Should Reflex's NPCs work in server's primary thread?
-  # Enabling this might cause a slight performance impact.
-  # Disabling this might cause random disconnects on some servers
-  sync_npcs: false
-
-  # For how long should the NPC behind the player be visible
-  # after attack (millis)? Set to -1 to make it always invisible
-  npc_visibility_time: 3250
-
-  # If a player is not fighting for this number of milliseconds, their
-  # NPCs will move far away unless they are back to combat. Useful to
-  # stop Reflex from interrupting world interaction with its bots.
-  # Set this to -1 to always keep the NPCs near players.
-  npc_max_nocombat: 2250
-
-  # Should Reflex disable its ForceField (basic NPC/bot) check when there
-  # is only one player online? This may be useful if you don't want your
-  # players to see random names in the tab list when they're alone on the server.
-  npc_disable_alone: false
-
-  # List of block types that players are allowed to attack through.
-  # Reflex uses the "contains" check. That is, if the block a player
-  # is looking at during attacking contains one of the words listed
-  # below, the hit will be registered as legitimate. Material types:
-  # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
-  #
-  # AIR and liquid blocks are considered pierceable by default.
-  # GRASS_BLOCK is considered non-pierceable by default (to allow making GRASS pierceable).
-  pierceable_blocks:
-    - "CAVE_AIR"
-    - "VOID_AIR"
-    - "FENCE"
-    - "GATE"
-    - "DOOR"
-    - "GLASS_PANE"
-    - "THIN_GLASS"
-    - "BANNER"
-    - "HEAD"
-    - "SKULL"
-    - "LEVER"
-    - "PRESSURE_PLATE"
-    - "STAIR"
-    - "LADDER"
-    - "VINE"
-    - "ANVIL"
-    - "SLAB"
-    - "SNOW"
-    - "FLOWER"
-    - "MUSHROOM"
-    - "HOOK"
-    - "CARPET"
-    - "BED"
-    - "BUTTON"
-    - "LILY"
-    - "SIGN"
-    - "TORCH"
-    - "DUST"
-    - "DETECTOR"
-    - "RAIL"
-
-  # Reflex can take snapshots of players' behaviour that gets
-  # passed to the machine learning check and either save those
-  # to files or send them to other plugins using Reflex API.
-  #
-  # (!) NOT FOR NORMAL USE! Only tweak if you were asked to by us.
-  #
-  # How should the debug files be created?
-  #
-  #     0 - do not create any, and do not fire any events.
-  #         No heuristics debugging desired (default).
-  #
-  #     1 - do not create any, but fire special events that will allow
-  #         other plugins to handle debug files creation using Reflex API.
-  #
-  #     2 - create debug files all the time, both classified "legit" and "hacks".
-  #         WARNING: might create A LOT of, possibly UNNECESSARY, files!
-  #
-  #     3 - only create debug files for behaviour classified as "legit".
-  #         Useful when reporting bypasses.
-  #
-  #     4 - only create debug files for behaviour classified as "hacks".
-  #         Useful when reporting false positives.
-  # 
-  # (i) NOTE: levels higher than 1 will still fire the API events.
-  # Please note than enabling this might slow the ML check down significantly
-  debug_heuristics: 0
-
-  # How strict should the machine learning check be?
-  #
-  #     0 - detects many "legit-like" Aimbot/AimAssist hacks.
-  #         Extremely unstable, might cause lots of false kicks.
-  #
-  #     1 - detects most combat cheats which give hacker
-  #         either slight or significant unfair advantage.
-  #         A few rare false positives may sometimes occur.
-  #
-  #     2 - [default] only detects obvious Killaura and Aimbot hacks,
-  #         though with minimal number of false positives.
-  #
-  # If you don't really care about bypasses, and just want
-  # obviously unfair cheats to be detected with as small
-  # number of false positives as possible, use severity of 2
-  heuristics_severity: 2
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the KillAura components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "ka.pts" # may be unstable on some servers
-
-  # List of worlds where Reflex will not check anyone for KillAura
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    35:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The BadPackets check validates all packets sent by players
-# to ensure that they are legit and were supposed to be sent.
-# Detects an extremely wide range of various cheat types.
-#
-# (!) NOTE #1: this check DOES NOT replace BadPacket checks in other
-#              anticheats, and those do not replace this one. Reflex's
-#              BadPackets is supposed to be used TOGETHER with BadPackets
-#              in some other anticheat(s).
-#
-# (i) NOTE #2: this check covers many possible/potential/existing bypasses
-#              of other checks, thus patching many types of cheats, including
-#              Killaura, Scaffold, PingSpoof, etc. If you are wondering do
-#              you need Reflex's BadPackets or not, the answer is definite:
-#              YES, no matter what other anticheat(s) you are using.
-badpackets:
-
-  # Enable this check?
-  # < !!! RECOMMENDED !!! >
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below, their next
-  # suspicious actions will be suspended. Only effective if
-  # "dynamic_cancel_thresholds" is set to false
-  cancel_threshold: 1
-
-  # There are cheats/modifications that allow players to slow down ticking speed of
-  # their client (we refer those to as "Reverse Timers" since they're basically the
-  # opposite thing to normal "Timers", but slow everything down instead of speeding up).
-  # Using those, cheaters are able to make anticheats believe they are lagging and abuse
-  # some stuff to make them fall down way slower than usual. With some small tweaking and
-  # rare midair boosts, this results in 10-20-blocks "Glide" bypasses for several popular
-  # anticheats. Reflex can fix that. Enabling this check tells Reflex to drag players down
-  # a few blocks each time they make a comparably distant move in midair while lagging.
-  midair_lag_dragdown: false
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the BadPackets components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "example entry"
-
-  # List of worlds where Reflex will not check anyone for BadPackets
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    5:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-    # For Moonlight checks - https://g.reflex.rip/moonlight
-    10000:
-    - "ban %player%
-    &fYou are banned.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you would like to appeal,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Ban ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The Criticals check prevents players from doing critical hits when it isn't technically possible.
-# Most Critical hacks are already patched by Reflex's KillAura check. This check aims to detect some
-# potential "packet-criticals" bypasses.
-#
-# (i) NOTE: Reflex MAY NOT detect "mini-jump" Criticals. Those are something that should be patched
-#           by a movement anticheat, so if you are using one, trust this type of hack to it. We still
-#           recommend you to keep this check enabled, though.
-criticals:
-
-  # Enable this check?
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below, their next
-  # suspicious actions will be suspended. Only effective if
-  # "dynamic_cancel_thresholds" is set to false
-  cancel_threshold: 1
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the Criticals components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "example entry"
-
-  # List of worlds where Reflex will not check anyone for Criticals
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    18:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The BlockActions check handles basically everything related to block
-# breaking/placement and prevents hackers from using Scaffold and Tower hacks.
-blockactions:
-
-  # Enable this check?
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below, their next
-  # suspicious actions will be suspended. Only effective if
-  # "dynamic_cancel_thresholds" is set to false
-  cancel_threshold: 10
-
-  # When Reflex cancels block placements it belives are illegal it also
-  # prevents suspected players from placing any blocks for time specified
-  # in this option (milliseconds, 1 s = 1000 ms). Only effective if the
-  # `silent` option above is set to false. 0 = no build penalty
-  penalty_time: 3000
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the BlockActions components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "example entry"
-
-  # List of worlds where Reflex will not check anyone for BlockActions
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    30:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The InvActions check prevents players from doing technically impossible
-# inventory actions such as moving with open inventory, clicking too quickly, and other.
-invactions:
-
-  # Enable this check?
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below, their next
-  # suspicious actions will be suspended. Only effective if
-  # "dynamic_cancel_thresholds" is set to false
-  cancel_threshold: 5
-
-  # Prevents from walking and rotating while inventory is open.
-  # Detects InventoryWalk and some AutoArmor/KillAura cheats
-  block_movement: true
-
-  # Should the 'block_movement' feature (see above) teleport cheaters back
-  # a few blocks, thus fully preventing them from using InventoryWalk? If
-  # false, then the 'block_movement' feature will simply close their inventory
-  do_setback: true
-
-  # Should inventories whose holder is not a BlockState be excluded
-  # from inventory click speed checking? (Fixes false flags in stuff like BedWars shops.)
-  exclude_non_blocks: true
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the InvActions components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "example entry"
-
-  # List of worlds where Reflex will not check anyone for InvActions
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    25:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The AntiKnockback check forces players to move away when they are getting attacked
-# properly. Detects "full" knockback ignorance, "Small Knockback" and "Reverse Knockback".
-# This check also forbids players to change their movement direction in midair, which also
-# detects many Bhop/Strafe cheats, among with a few other movement ones.
-antiknockback:
-
-  # Enable this check?
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below, their next
-  # suspicious actions will be suspended. Only effective if
-  # "dynamic_cancel_thresholds" is set to false
-  cancel_threshold: 5
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the AntiKnockback components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "example entry"
-
-  # List of worlds where Reflex will not check anyone for AntiKnockback
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    7:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The VehicleMove check prevents players from moving impossibly on
-# vehicles, which detects a variety of cheats, including BoatFly and
-# BoatSpeed. NOTE: all vehicle cheats, and hence the check, only work
-# on Minecraft 1.9 or newer. No BoatFly threats on 1.8.
-vehiclemove:
-
-  # Enable this check?
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below,
-  # all their next suspicious actions will be suspended
-  cancel_threshold: 4
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the VehicleMove components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "example entry"
-
-  # List of worlds where Reflex will not check anyone for VehicleMove
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    10:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The ElytraMove check strictly limits Elytra movement of players, thus attempting
-# to enforce vanilla Elytra movement/gliding/flying mechanics and detecting cheats
-# like Elytra+/ElytraFly/ElytraSpeed and related.
-elytramove:
-
-  # Enable this check?
-  enabled: true
-
-  # Turn this on if you don't want this check to cancel any illegal actions
-  silent: false
-
-  # Should Reflex use different cancel thresholds for each check?
-  # This will result in way more accurate and smart cancel system
-  dynamic_cancel_thresholds: true
-
-  # If a player exceeds the number of violations below,
-  # all their next suspicious actions will be suspended
-  cancel_threshold: 5
-
-  # Should Reflex forcefully take off* elytra from players who appear to be
-  # very suspicious (i.e. when they are continuing to get new violations even
-  # after being teleported back by Reflex many times)?
-  #
-  # (i) RECOMMENDED - this may help to avoid legitimate players getting kicked
-  #                   in some unusual/strange cases by this check.
-  #
-  # Has no effect if "silent" is set to "true", since in that case Reflex will
-  # do no setbacks, and therefore no unequips.
-  #
-  # *  [Reflex will remove Elytra from player's chestplate slot and copy the item
-  #     deeply (with all metadata, durability and everything else) in their inventory,
-  #     if there is enough space, or drop it beneath player's feet otherwise.]
-  unequip_elytra: true
-
-  # Here you can put a list of checks you don't wish to use for some reason.
-  #
-  # WARNING: IT IS HIGHLY RECOMMENDED THAT YOU REPORT BUGS AT go.reflex.rip/bug
-  #          INSTEAD OF JUST DISABLING CHECKS, AS FIRST WILL RESULT IN THESE
-  #          GETTING FIXED. IF YOU PREFER TO JUST DISABLE SOMETHING WITHOUT
-  #          REPORTING THE ISSUES, YOU MUST NOT COMPLAIN ABOUT BYPASSES!
-  #
-  # The names of all the VehicleMove components can be found on our wiki: https://g.reflex.rip/wiki
-  disabled_checks:
-  - "example entry"
-
-  # List of worlds where Reflex will not check anyone for ElytraMove
-  disabled_worlds:
-  - "lobby"
-
-  # Command map
-  actions:
-    240:
-    - "reflex bypass %player% %check% true"
-    - "reflex delay 15 reflex kick %player%
-    &fYou were just kicked.%break%
-    &fReason: &b&lDETECTED FOR CHEATING&r%break%
-    %break%
-    &r&cIf you believe that this is a false positive,%break%
-    &cplease contact server administrators.&r%break%
-    %break%
-    &7Kick ID: &f%id%%break%
-    &7%date%"
-
-
-
-
-# The ClientControl check allows you to disable certain feature
-# of certain mods, or disallow joining with them at all.
-#
-# NOTE: disabled by default because servers usually do not
-#       want to have this sort of check. It is still stable
-#       and it is safe to use it if you need or want to.
-clientcontrol:
-
-  # Enable this check?
-  enabled: false
-
-  # Your staff members (players with the reflex.notify permission) will
-  # receive notifications when a player joins with a modded client
-  notifications:
-
-    # Enable notifications?
-    enabled: false
-
-    # Notification message. %mod% will be replaced with the name of detected client modification.
-    # Normal placeholders (which can be used in actions of other checks) are also applicable here
-    message: '&9%player% &ris using &9%mod%'
-
-  # This will disallow joining the server with any client which's
-  # brand is not vanilla. Note that this does NOT and can NOT
-  # block hacked clients as clientbrand of those is actually "vanilla".
-  # However, this will decrease the chance of players using ghost or
-  # injectable clients based on coremods on your server
-  paranoid_mode:
-
-    # Enable? Only enable this if you know what you're doing.
-    # You're forbidding your players to use most of mods and (legit) non-vanilla clients
-    enabled: false
-
-    # Paranoid Mode suspends clients which's brand is
-    # not in this list from joining your server
-    whitelist:
-    - "vanilla"
-    - "vanilla/squidhq"
-
-    # Commands that will be dispatched if any modifications
-    # have been detected on a player's client
-    actions:
-    - "kick %player% &cAccess denied.%break%%break%&rBlacklisted modifications detected.%break%&rNote that FML and LiteLoader are also forbidden.&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # 5zig is a mod that enhances the client by adding some more additional
-  # features to it, such as GUIs, CPS/FPS ingame statistics and more:
-  #     http://5zig.net
-  # 5zig allows to disable its certain features
-  5zig:
-
-    # Should players be allowed to join the server with this mod?
-    allow_join: true
-
-    # Which components of 5zig shall Reflex disable?
-    # true - disable the component, false - let the component be active
-    disable:
-
-      # Draws active potions list on the screen
-      potion_effect_hud: true
-
-      # Draws a specific vignette (a visual effect at the corners
-      # of the screen) of a different color according to the currently
-      # active potion (acts like a potion effect indicator)
-      potion_vignette: true
-
-      # Draws the armor player is currently wearing,
-      # on the screen with it's actual durability
-      armor_hud: true
-
-      # Renders players saturation scale under their nametags
-      render_saturation: true
-
-      # Renders players health scale under their nametags
-      render_health: true
-
-      # Reconnects to the server automatically after kick
-      auto_reconnect: true
-
-    # If allow_join is set to false, these commands will be
-    # dispatched when a player joins with 5zig
-    actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&l5zig&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # BetterSprinting is a mod that enhances sprinting behaviour:
-  #     https://minecraft.curseforge.com/projects/better-sprinting
-  # BSM allows to disable itself
-  better_sprinting:
-
-    # Should players be allowed to join the server with this mod?
-    allow_join: true
-
-    # Should Reflex disable BetterSprinting?
-    disable: true
-
-    # If allow_join is set to false, these commands will be
-    # dispatched when a player joins with BetterSprinting
-    actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lBetterSprinting&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # WorldDownloader lets the client download your server map:
-  #     http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2520465
-  # WDL allows to disable itself on your server
-  world_downloader:
-
-    # Should players be allowed to join the server with this mod?
-    allow_join: false
-
-    # Should Reflex disable WorldDownloader?
-    disable: true
-
-    # If allow_join is set to false, these commands will be
-    # dispatched when a player joins with WorldDownloader
-    actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lWorldDownloader&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # The Minecraft mod API and loader most mods are based on:
-  #     http://www.minecraftforge.net
-  # Cannot be disabled, but can be detected
-  forge:
-
-    # Should players be allowed to join the server with this mod?
-    allow_join: true
-
-    # If allow_join is set to false, these commands will be
-    # dispatched when a player joins with Forge
-    actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lForge&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # A lightweight Minecraft mod API and loader:
-  #     http://www.liteloader.com
-  # Cannot be disabled, but can be detected
-  liteloader:
-
-    # Should players be allowed to join the server with this mod?
-    allow_join: true
-
-    # If allow_join is set to false, these commands will be
-    # dispatched when a player joins with LiteLoader
-    actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lLiteLoader&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # Includes several game modifications that may heavily
-  # enhance vanilla Minecraft giving user unfair advantages.
-  # Several parts of BetterPVP can be blocked or detected
-  betterpvp:
-
-    # Should players be allowed to join the server with this mod?
-    allow_join: true
-
-    # Which components of BetterPVP shall Reflex disable?
-    # true - disable the component, false - let the component be active
-    disable:
-
-      # Displays a minimap with player radar in the corner of the screen
-      minimap: true
-
-      # Displays current armor info on the screen
-      armor_status: true
-
-      # Displays current potion info on the screen
-      potion_status: true
-
-      # Displays current archery info on the screen
-      archery_status: true
-
-      # Enhances sprinting behaviour
-      better_sprint: true
-
-      # Enhances sneaking behaviour
-      toggle_sneak: true
-
-      # Allows player to use items faster
-      quick_item_use: true
-
-      # Notifies player about nearby TNTs
-      tnt_notifications: true
-
-      # Draws marks showing where did the player die last time
-      death_points: true
-
-      # Displays entity infos on the screen
-      entity_info: true
-
-    # If allow_join is set to false, these commands will be
-    # dispatched when a player joins with BetterPVP
-    actions:
-    - "kick %player% &cAccess denied.%break%&rBlacklisted modifications detected: &b&lBetterPVP&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # A mod that lets the player to save and load schematics:
-  #     https://minecraft.curseforge.com/projects/schematica
-  # Schematica allows to disable its certain parts, but can't be detected
-  schematica:
-
-    # Which components of Schematica shall Reflex disable?
-    # true - disable the component, false - let the component be active
-    disable:
-
-      # Building bot based on the given schematica
-      printer: true
-
-      # Similar to WorldDownloader, but with limited region size
-      save: true
-
-      # Loads one of saved schematics and prepares it for use
-      load: true
-
-  # Vape is one of the most popular Minecraft ghost clients which was leaked with a backdoor
-  # allowing the server know about its use. NOTE: this does not detect real (uncracked) Vape!
-  vape:
-
-    # Should players be allowed to join the server with this mod?
-    allow_join: false
-
-    # If allow_join is set to false, these commands will be
-    # dispatched when a player joins with cracked Vape
-    actions:
-    - "reflex ban %player% -1 &cAccess denied.%break%&rBlacklisted modifications detected: &b&lVape&r%break%%break% &7Kick ID: &f%id%%break%&7%date%"
-
-  # A Minecraft client with a variety of built-in modifications:
-  #     https://client.badlion.net/
-  # Badlion Client allows to disable its certain parts, but can't be detected.
-  # If you want Reflex to disable certain parts of the Badlion Client for users,
-  # make sure to configure the 'blc_config.json' file which can be found in
-  # Reflex's working directory. If you don't want Reflex to do anything with
-  # users running Badlion Client, simply set this option to false
-  badlion_client_support: true
-
-  # Command map (unused)
-  actions: {}
-
-
-
-
-#### Reflex Moonlight Configuration ####################################
-#
-#   Reflex has also got an extended version with more cool extra
-# features, which was named "Moonlight" for completely no specific
-# reasons. Here you can customize the Moonlight stuff.
-#
-#   Learn more about Reflex Moonlight:
-#   --> https://g.reflex.rip/moonlight
-#
 ########################################################################
-moonlight:
+# BASIC ADVCFG FILE INFORMATION (META) — its name (a very-very brief
+# description), its author (provider) and its version number/string.
+#
+# MUST BE CHANGED BEFORE THIS ADVCFG GETS USED!
+########################################################################
+name: 'Default Configuration'
+provider: 'Reflex Development Team'
+version: '4'
 
-  # Insert your Moonlight (NOT CLOUD!) key here in order to activate Moonlight.
-  # Learn more: https://g.reflex.rip/moonlight
-  key: 'insert your key here'
 
-  # There is a magical way of exploiting Minecraft 1.8 clients that
-  # lets Reflex know if a player has cheats installed on their computer
-  # (no matter if they are using them at the moment or not). Please note
-  # that doing so is illegal (seriously, by law) in most of countries
-  # without a prior notification. So make sure that you notify your players
-  # about the existence of this check if you want to run all-white (something
-  # like "By continuing to play on our servers you agree that we may check
-  # files installed on your computer during your gameplay.").
-  #
-  # Enable client checking (for 1.8 clients, server version does not matter)?
-  # Players who will be detected by this check will get 9999+ VLs on BadPackets.
-  #
-  # >> https://github.com/MeGysssTaa/ReflexIssueTracker/wiki/Moonlight-Client-Checking
-  enable_client_checking: false
 
-  # Should client checking (see option above) allow players to have AAL (AlphaAntiLeaK)
-  # installed? In a nutshell, AAL is a launcher that's used by developers to protect their
-  # applications. Sadly, most of the applications hosted at AAL are hacked clients. However,
-  # there are also some legitimate Minecraft "PvP" clients as well - for example, Lunar Client.
-  # Set this option to true if you have many fair players using such clients.
-  allow_aal: false
 
-  # Should Reflex attempt to mask itself (create the feeling of non-presence)
-  # from non-OP (regular) players? If so, how should it do that? Allowed values:
+########################################################################
+#    THE CONFIGURATION ITSELF
+########################################################################
+
+# Advanced KillAura options
+ka:
+
+  # Advanced options for component ka.cbd
   #
-  #     no      - do not hide Reflex. (default)
+  #     Combines all other Killaura components and looks at general
+  #     violation density. Used to detect "half-legit-half-blatant" hacks.
   #
-  #     command - print the default Spigot unknown command message (usually from spigot.yml)
-  #               to users who type "/reflex" without OP permissions.
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★☆☆☆  (2/5 - useful in some cases or for some certain types of cheats)
+  cbd:
+
+    # How many violations* does a player need to score within
+    # {period} ticks in order to be flagged? This check is used to detect
+    # blatant cheaters that are suspected very often but not heavily.
+    #
+    # * [Each check gives 'individual' (usually dynamic) number of
+    #    violations, which also often differs from the one shown in
+    #    verbose, because VLs going to ka.cbd and VLs going to player
+    #    are different. The basic rule is same, though: the more the
+    #    check is trusted, the more violation points it gives.]
+    threshold: 35
+
+    # Checking period in ticks*.
+    # (!) NO '/REFLEX RELOAD' SUPPORT: requires full server restart to update!
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    period: 600
+
+  # Advanced options for component ka.clk
   #
-  #     deep    - similar to 'command', but also disables tab-complete for "/reflex" command
-  #               for players without OP permissions, and also hides the command from MC 1.13's
-  #               command suggestions/help pop-up when possible.
+  #     Monitors players' clicking rates and detects various non-vanilla
+  #     behavior, including fast / double-(multiple-) / consistent clicking.
   #
-  # Please note that no matter what you choose, there are always ways to find out which
-  # anticheat(s) a server is using because all anticheats behave differently. This also
-  # won't enhance your server security at all. A proper anticheat will never be bypassed
-  # just because a hacker knows it is being used (and Reflex is one of those).
-  hide_reflex: 'no'
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★☆☆  (3/5 - efficient for certain types of cheats)
+  clk:
+
+    # Maximal allowed number of clicks players are allowed to
+    # do in one second (20 ticks). Legit jitter is usually ≤ 16
+    # (keep in mind that Reflex's CPS calculation is kind of "unusual" and
+    # therefore the CPS it shows will be different to CPS shown by CPS meter
+    # software/mods; 18+ CPS should be impossible for a legitimate player to
+    # get on **Reflex's** click rate meter)
+    max_cps: 18
+
+    # Minimal allowed clicking variance. Used to detect consistent click rates.
+    # Higher - more strict. Lower - more lenient. 0 - disable the check.
+    # NOTE: this check is very stable and is not known to have any false positives.
+    min_click_variance: 2
+
+    # Minimal delay that Reflex will enforce between clicks, in milliseconds*.
+    # If a player constantly clicks at delays lower than this, then they are
+    # very likely to be using double-/triple-/N-click cheats or AutoClicker.
+    # For example, clicking with delay of 20 ms is approximately equal to
+    # 1000/20 = 50 clicks per second, which is absolutely not legitimate.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    min_click_delay: 25
+
+  # Advanced options for component ka.heu
+  #
+  # Uses a neural network with pre-trained (by us, the developers, with
+  # help of you, the community) datasets ("samples") to detect a wide
+  # range of combat cheats like Aimbot and Killaura/"LegitAura".
+  #
+  # (i) Settings regarding the Heuristics check do not affect the
+  #     core (the NN and datasets) itself, but its "extra" checks
+  #     added in release "10.9". Those parts are combined to compute
+  #     a CP (Cheat Points) number based on neural network output.
+  #     The number of cheat points is always shown in ka.heu verbose
+  #     messages like "cp: N". CP is always a natural number, N∈[0..20].
+  #     The Heuristics check takes its final decision based both on
+  #     NN output and on the number of cheat points, among with some
+  #     other factors like lag status and recent behavior of a player.
+  #
+  # Accuracy:   ★★★☆☆  (3/5 - known to have some false positives in some cases)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  heu:
+
+    # If CP number of a player is greater than this (and the core decision
+    # is "cheater"), then, no matter the other factors, the player is considered
+    # cheating. This means that that player triggered too many "extra" checks
+    # at a time and, at the same moment, has been classified as a cheater
+    extreme_cp_threshold: 6
+
+    # If the core decision for a player is "cheater", they are not lagging
+    # (have a stable/"good" lag status) and have got a number of CP greater
+    # then this, then the final decision is going to be "cheater".
+    # Does not trigger on players whose lag status is considered "bad"
+    stable_cp_threshold: 3
+
+    # If the core decision for a player is "cheater" and moreover the NN
+    # is very sure about it (extremely high confidence), and the player's
+    # number of CP is greater then then the one set in this option, then
+    # the player is considered cheating. High confidence is pretty difficult
+    # for a legit player to achieve. When the NN is really "certain" the
+    # player is cheating, then most often they really do
+    certain_cp_threshold: 2
+
+  # Advanced options for component ka.ra
+  #
+  #     Monitors many combat behavior aspects of a player and utilizes
+  #     a variety of techniques in one to detect practically every KillAura
+  #     that gives cheater any significant advantage in fights. Unlike many
+  #     other checks, this one should be nearly absolutely accurate and safe.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
+  ra:
+
+    # How many hits do players have to do before their combat patterns are analyzed?
+    check_time: 10
+
+    # Based on many factors, this check computes average "cheating probability"
+    # percent for players' combat. If the computed probability (that is, the
+    # likelihood that a particular player has used KillAura in a particular fight)
+    # is greater than or equal to this number, they will be given a suspicion and
+    # a few violations (but never more than a few tens).
+    max_probability: 85.0
+
+    # After how many milliseconds* will ka.ra's suspicions be forgotten?
+    # See options above and below as well.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 90000
+
+    # If upon getting a new ka.ra's suspicion player's number of suspicions from this component
+    # within the last {suspicion_lifespan} milliseconds is greater than this {threshold}, then
+    # this player will be given a lot of violations (enough for an instant kick/punishment).
+    # Properly configured, this check will never flag legitimate players enough for a kick.
+    threshold: 1
+
+  # Advanced options for component ka.ray
+  #
+  #     Combines hitbox (attack angle & range), block raytrace (attacking through
+  #     non-pierceable blocks), and entity raytrace (attacking through fake client-side
+  #     entities/bots) checks. Works by basically raycasting player's direction vector
+  #     through the world until the cursor intersects with bounding box of a block or
+  #     an entity or until the configured limit of steps is reached. Makes it impossible
+  #     to use really blatant KillAura/Reach/Hitbox cheats.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  ray:
+
+    # Player direction vector multiplier. Smaller numbers will result in slightly more
+    # accurate raycasting but will make the process slower (more performance impact).
+    raycast_precision: 0.05
+
+    # The number of blocks Reflex should artificially expand hitboxes of entities by.
+    # Smaller = stricter, but more false-positives-prone.
+    hitbox_expansion: 0.195
+
+    # If the raycast "cursor" did not intersect with any bounding box within the following
+    # number of steps (iterations), then the hit will be considered invalid (out of legitimate
+    # attack range or player not looking at the target properly).
+    max_raycast_steps: 70
+
+    # How many violations should Reflex give to players when they attack
+    # an entity out of legitimate range or without looking at it properly?
+    hitbox_weight: 1
+
+    # How many violations should Reflex give to players when they attack an
+    # entity through a non-pierceable block (such as stone, bricks, etc.)?
+    # 0 = disable block raytrace checking.
+    block_raytrace_weight: 2
+
+    # How many violations should Reflex give to players when they attack
+    # an entity through artificially created invisible bots (fake players)?
+    # 0 = disable entity raytrace checking.
+    entity_raytrace_weight: 5
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating.
+    # See excessive_violation_weight.
+    threshold: 11
+
+    # After how many milliseconds* will ka.ray's suspicions be forgotten?
+    # See excessive_violation_weight.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 20000
+
+    # If a player receives more than {threshold} suspicions on any of the ka.ray's
+    # subcomponents within {suspicion_lifespan} ms, they will instantly be given the
+    # following number of violations.
+    excessive_violation_weight: 16
+
+  # Advanced options for component ka.yrt
+  #
+  #     Looks at players' aiming/rotation style during combat and finds
+  #     any suspicious patterns in it, and then computes a "probability of
+  #     hacking" using the `{suspicious_rotations} / {total_rotations} * 100
+  #     formula. Detects some Aimbots and Killauras very quickly.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★☆☆  (3/5 - efficient for certain types of cheats)
+  yrt:
+
+    # How probable (in percent, %) does a player need to be cheating
+    # according to the ka.yrt check in order to be flagged for KillAura
+    max_probability: 70
+
+
+
+
+# Advanced BlockActions options
+#
+# (i) One may want to reduce the values here a little bit in case of many
+#     "ultra-professional" players on the server who are "known" (trusted)
+#     to be able to build very quickly without any mods, autoclickers, etc.
+blckact:
+
+  # Advanced options for component blckact.sfd
+  #
+  #     Checks for ScaffoldWalk hacks and enforces a bridging speed limit.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  sfd:
+
+    # Minimal delay between placing blocks when bridging horizontally (in ticks*).
+    # Higher - more strict. Lower - more lenient. 0.0 - disable the check.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_hor: 5.0
+
+    # Minimal delay between placing blocks when bridging diagonally (in ticks*).
+    # Higher - more strict. Lower - more lenient. 0.0 - disable the check.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_dia: 5.0
+
+    # This option specifies whether Reflex should check players' bridging accuracy or not.
+    # It is impossible for most legit players to be absolutely accurate while bridging really
+    # quickly. However, if there are many players on your server who claim to be able to bridge
+    # really fast without a single mouse drag (which is really difficult), set this to false.
+    check_accuracy: true
+
+  # Advanced options for component blckact.tw
+  #
+  #     Checks for Tower hacks and enforces a towering speed limit.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  tw:
+
+    # Minimal delay between placing blocks when towering up (in ticks*).
+    # Higher - more strict. Lower - more lenient. 0.0 - disable the check.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_tw: 7.5
+
+
+
+
+# Advanced InvActions options
+invact:
+
+  # Advanced options for component invact.mov
+  #
+  #     Prevents cheaters from walking/rotating with open inventory.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
+  mov:
+
+    # For how many milliseconds* are players allowed to move and/or
+    # rotate with open inventory? Reducing this number will speed
+    # detection of InventoryWalk hacks up, but may increase the number
+    # of false positives in various situations.
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    open_wait: 500
+
+  # Advanced options for component invact.fiv
+  #
+  #     Restricts inventory-clicking/chest-looting rates.
+  #     Prevents cheaters from using very blatant ChestStealer/AutoLoot hacks.
+  #
+  #     NOTE: Reflex only counts clicks at items in different slots WITH SOMETHING IN THEM.
+  #           Clicking at the same slot OR at slots without items is NOT checked.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★☆☆☆  (2/5 - useful in some cases or for some certain types of cheats)
+  fiv:
+
+    # Most checks in Reflex, including the main invact.fiv subcomponent, are packet-based.
+    # That is, instead of listening to Bukkit events which provide no proper ways for a smooth
+    # lag accounting system, this check only watches packets sent by players and analyzes them.
+    # However, due to some changes made to the game protocol in 1.9, it became impossible to
+    # create a proper packet-based check on new versions. That's why our nicer (packet) check
+    # only works on 1.8x, sadly.
+    #
+    # In order to provide some basic (though a bit worse) protection for servers running new
+    # Minecraft versions, there is also a "classic" (event-based) check in Reflex. This option
+    # specifies whether you want to use that check or not. We advise you not to run both packet
+    # and event checks concurrently - that's useless and may cause problems.
+    #
+    # Possible values:
+    #
+    #     (a) auto  - let Reflex decide for you (RECOMMENDED). The check will be automatically
+    #                enabled on 1.9+ and disabled on 1.8x.
+    #
+    #     (b) true  - enable the event-based invact.fiv check.
+    #
+    #     (c) false - disable the event-based invact.fiv check.
+    #
+    # Reflex will self-disable with an error if an invalid value is set here.
+    enable_event_check: auto
+
+    # If a player does more than one click in the number of milliseconds* specified below,
+    # they will be suspected and given violations. This only affects the event-check, and
+    # therefore also requires the event-check to be active (either with 'auto' + 1.9+ server
+    # or with 'true' set on the 'enable_event_check' option above).
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    min_event_click_delay: 75
+
+    # If a player does more than one click in the number of ticks* specified below,
+    # they will be suspected and given violations.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    min_click_delay: 2
+
+    # If a player will receive more than {const_clicking_threshold} consistent clicking
+    # suspicions within {const_click_lifespan} milliseconds*, they will be given many
+    # violations (failing this check 2-3 times is enough to be kicked from the server by default).
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    const_click_lifespan: 2250
+
+    # If a player has clicked more than {const_clicking_threshold} times in a row
+    # at an approximately equal ("consistent") rate, they will be given a suspicion.
+    # Learn more about this option by reading comment to the one above ('const_click_lifespan').
+    const_clicking_threshold: 17
+
+
+
+
+# Advanced AntiKnockback options
+vel:
+
+  # Advanced options for component vel.act
+  #
+  #     This check gives players small random velocities when they open
+  #     any inventories (including chests, crafting tables, etc.) and makes
+  #     sure they respond with a proper move. If a player did not move
+  #     as expected, they are given a suspicion. Receiving more than {threshold}
+  #     suspicions within {suspicion_lifespan} ms means that the player is very
+  #     likely to be cheating, and therefore they are given a lot of violations
+  #     at a time (a number that is enough for instant kick).
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★☆☆  (3/5 - efficient for certain types of cheats)
+  act:
+
+    # Maximal allowed X/Z  distance (in blocks) between knockback locations
+    # that Reflex predicts and players' actual knocknack locations
+    max_offset: 0.024
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating
+    threshold: 2
+
+    # After how many milliseconds* will vel.act's suspicions be forgotten?
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 30000
+
+    # How many ticks* should Reflex wait after "fatal" flags before dealing
+    # violations and showing the necessary verbose message(s)? For example,
+    # if this is set to 100, and a player scores over {threshold} suspicions
+    # in last {suspicion_lifespan} ms, then Reflex will wait 5 seconds before
+    # actually notifying about this in verbose and giving that player many
+    # violations (kicking them). This option is very recommended to be something
+    # high (100 is high enough, though it could even be higher if you wish) as
+    # it confuses cheaters and hardens their understanding of kick/ban reasons
+    # (because cheaters will be kicked "randomly", not right on their violations).
+    #
+    # (i) This does not affect "low" ("non-fatal") violations which only
+    #     add 1 violation and exist simply to show verbose messages - these
+    #     will always go without any delays.
+    #
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+    flag_delay: 100
+
+  # Advanced options for component vel.adr
+  #
+  #     Checks for illegal movement direction changes in midair.
+  #     This is normally impossible for legit players but often
+  #     happens if a player is using knockback or other movement
+  #     cheats, including BHop/Strafe.
+  #
+  # Accuracy:   ★★★★☆  (4/5 - may have a few very rare false detections)
+  # Efficiency: ★★★★☆  (4/5 - pretty efficient, detects many known types of cheats)
+  adr:
+
+    # Maximal allowed angle (in degrees) between player's current and
+    # their last movement direction vectors (180 degrees = full reverse;
+    # also, 180 degrees is the maximal possible angle (1 side: 360/2=180, just maths))
+    max_angle: 35.0
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating
+    threshold: 3
+
+    # After how many milliseconds* will vel.adr's suspicions be forgotten?
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 7500
+
+  # Advanced options for component vel.hrz
+  #
+  #     Checks whether players are being knocked back properly after being hit
+  #     (horizontally — there is a separate, vel.vtl, component for vertical velocity
+  #     monitoring), and if not, teleports them where they should normally be knocked
+  #     back. Being teleported forcefully too often indicates that a player is most
+  #     probably cheating, so when that happens, Reflex adds them a significant number
+  #     of violations so that they are kicked for AntiKnockback soon enough.
+  #
+  #     Before deciding whether to teleport a player or not, Reflex performs several
+  #     checks, which all add different number of "pre-vl", and then looks how many
+  #     "pre-vls" did a player get during checking. If that number is greater than
+  #     {prevl_threshold}, the player is considered cheating (using Velocity hacks).
+  #     When a player is considered cheating, they are added one suspicion. If that
+  #     player gets more than {threshold} suspicions within {suspicion_lifespan} ms,
+  #     they will be added real AntiKnockback violations, which will later lead to
+  #     them being teleported (forced knockback) or removed from the server.
+  #
+  # Accuracy:   ★★★☆☆  (3/5 - known to have some false positives in some cases)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  hrz:
+
+    # Maximal allowed number of "pre-vls" a player is allowed to
+    # score during check before being flagged/teleported/kicked.
+    prevl_threshold: 3
+
+    # The maximal number of suspicions a player is allowed to obtain in
+    # {suspicion_lifespan} milliseconds before being flagged for cheating
+    threshold: 2
+
+    # After how many milliseconds* will vel.hrz's suspicions be forgotten?
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    suspicion_lifespan: 5000
+
+    # Reflex attempts to predict where players should land after being hit,
+    # and teleports them there in case they seem to be ignoring server velocity.
+    # If you want Reflex to simply monitor and kick, without forcing anyone to
+    # knock back properly, then just enable the "silent" option in config.yml.
+    forced_knockback:
+
+      # How strongly should Reflex teleport players horizontally?
+      # 0.0 - teleport to location on hit (no forced knockback).
+      # Higher values - higher teleport distance.
+      hor_multiplier: 4.0
+
+      # How strongly should Reflex teleport players vertically?
+      # 0.0 - teleport to location on hit (no forced knockback).
+      # Higher values - higher teleport distance. The overall Y
+      # teleport distance is limited, see {max_ver_dist} below.
+      ver_multiplier: 2.0
+
+      # What's the maximum distance (in blocks) Reflex can teleport players
+      # vertically? Teleportation is made relatively to player's position ON HIT
+      # (at the moment when the check started). If the Y distance between that
+      # location and predicted location (plus {ver_multiplier}) is greater than
+      # {max_ver_dist} blocks, then the player is only teleported {max_ver_dist}
+      # blocks vertically. This does not affect horizontal teleportation.
+      max_ver_dist: 1.7
+
+
+
+
+# Advanced VehicleMove options
+vehmv:
+
+  # Advanced options for component vehmv.boat
+  #
+  #     Enfores vanilla boat movement mechanics. Checks fall
+  #     gravity and movement speed and acceleration in order to
+  #     detect BoatFly/BoatSpeed cheats.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  boat:
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* in normal conditions (still surface or in midair)?
+    max_normal_speed: 0.52
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* on flowing water (waterfalls, flowing streams)?
+    max_flowing_speed: 0.58
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* on ground (yes, it is possible to drive boat like a car
+    # on ground in Minecraft)? This does cover ice blocks - see options below.
+    max_ground_speed: 0.26
+
+    # What's the maximal allowed number of blocks a player is allowed to move
+    # on boat per tick* on frozen surfaces (ice, packed ice)? NOTE: it is possible
+    # to use boat like a sportcar on ice in Minecraft - love its physics.
+    max_ice_speed: 2.08
+
+    # What's the maximal allowed acceleration (in m/s^2, metres per second square)
+    # a player is allowed to reach on boat? NOTE: acceleration is basically same in
+    # any conditions - on (flowing) water, ice, ground and even in midair (partially).
+    max_acceleration: 0.06
+
+    # * [1 second = 20 ticks, 2.5 s = 50 ticks, etc.]
+
+
+
+
+# Advanced ElytraMove options
+eltr:
+
+  # Advanced options for component eltr.mv
+  #
+  #     Enfores vanilla Elytra movement mechanics. Strictly
+  #     limits the direction and speed in which players are
+  #     allowed to move in different situations with Elytra.
+  #     Detects Elytra+/ElytraFly/ElytraSpeed and similar.
+  #
+  # Accuracy:   ★★★★★  (5/5 - awesome)
+  # Efficiency: ★★★★★  (5/5 - awesome)
+  mv:
+
+    # If a player gets teleported back for violating ElytraMove more than
+    # {setbacks_to_unequip} times within {setback_lifespan} milliseconds*,
+    # Reflex will forcefully take off their Elytra. See regular config.yml
+    # for details on "take off".
+    #
+    # NOTE: only takes effect if all of the following is true:
+    #     (1) "elytramove.silent" in config.yml is disabled;
+    #     (2) "elytramove.unequip_elytra" in config.yml is enabled (which itself also requires (1) to be true).
+    #
+    # * [1 second = 1000 milliseconds, 2.5 s = 2500 ms, etc.]
+    setbacks_to_unequip: 12
+
+    # See comment to the above option (`setbacks_to_unequip`).
+    setback_lifespan: 3000
