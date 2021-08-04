@@ -135,7 +135,9 @@ Si vous souhaitez que votre thème ou votre traduction soit ajouté à la liste 
 ▸ /reflex — Affiche la version actuelle de Reflex et la version des données heuristiques (IA) avec lesquelles il fonctionne.
 ▸ /reflex help — Affiche une liste des commandes de Reflex avec une explication de base de celles-ci.
 ▸ /reflex bc — Envoie à tout le monde un message donné.
+▸ /reflex ban — Banni un joueur du serveur, avec quelques effets visuels.
 ▸ /reflex kick — Expulse un joueur du serveur, avec quelques effets visuels.
+▸ /reflex unban — Retire un joueur de la liste des personnes bannies.
 ▸ /reflex delay — Exécute une commande donnée avec un délai déterminé.
 ▸ /reflex setdb — Configure la base de données à laquelle Reflex se connecte.
 ▸ /reflex reload — Recharge la configuration de Reflex. Certains paramètres peuvent ne pas être affectés et nécessiter un redémarrage.
